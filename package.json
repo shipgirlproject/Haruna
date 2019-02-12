@@ -1,0 +1,20 @@
+{
+  "name": "haruna",
+  "version": "0.0.1",
+  "description": "A DBL Vote Webhook Handler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dbl",
+    "discordbots",
+    "helper"
+  ],
+  "author": "Deivu (Saya)",
+  "license": "MIT",
+  "dependencies": {
+    "enmap": "^4.7.1",
+    "fastify": "^1.14.1"
+  }
+}
