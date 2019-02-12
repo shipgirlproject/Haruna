@@ -45,7 +45,7 @@ class Haruna {
             if (req.headers.user_id) {
                 res.send(this.storage.has(req.headers.user_id))
                 console.log('[Notice] A get request served')
-            } else res.send('No user_id supplied')
+            } else res.send(false)
         }
     }
 }
