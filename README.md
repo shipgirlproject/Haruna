@@ -35,4 +35,4 @@ Returns true if the user voted, false if not
 
 You may want to fire it up with pm2 or something so that it will not close, as well restart it if it crashes due to some reason
 
-`Note: This process is configured to run SEPARATELY from your bot. It's in its own process, so even your bot crashes, the api won't`
+`Note: This process will run SEPARATELY from your bot. It's in its own process, so even your bot crashes, the api won't`
