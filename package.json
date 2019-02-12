@@ -2,9 +2,9 @@
   "name": "haruna",
   "version": "0.0.1",
   "description": "A DBL Vote Webhook Handler",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "start.js",
+    "scripts": {
+    "start": "node start.js"
   },
   "keywords": [
     "dbl",
@@ -14,7 +14,14 @@
   "author": "Deivu (Saya)",
   "license": "MIT",
   "dependencies": {
+    "better-sqlite-pool": "github:eslachance/better-sqlite-pool",
     "enmap": "^4.7.1",
     "fastify": "^1.14.1"
+  },
+    "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://github.com/Deivu/Haruna"
   }
 }
