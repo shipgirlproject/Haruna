@@ -5,7 +5,7 @@ class Haruna {
         this.storage = new enmap({
             name: 'votes',
             fetchAll: true,
-            dataDir: dir ? dir : './data/votes'
+            dataDir: dir ? dir : ''
         })
         this.auth = auth;
         this.length = length;
@@ -13,9 +13,9 @@ class Haruna {
         * 
         *
         */
-        this.storage.defer().then(() => {
-            fastify.post('/vote/', this.onVote)
-            fastify.get('/hasVoted/', this.onCheck)
+        this.storage.defer.then(() => {
+            fastify.post('/vote/', (req, res) => this.onVote(req, res))
+            fastify.get('/hasVoted/', (req, res) => this.onCheck(req, res))
             fastify.listen(port, '0.0.0.0', () => console.log(`[Notice] Haruna's Vote Service is now Online, listening @ ${port}`))
             setInterval(() => {
                 for (const [key, val] of this.storage) {
