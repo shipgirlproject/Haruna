@@ -15,6 +15,9 @@ This is the one that you use for DBL, this is where DBL will send the votes from
 
 ### /hasVoted/ "Get"
 This is where you check if someone voted or not.
-Needs the FF headers
-"authorization": "Same on what you used for your DBL webhook password"
-"user_id": "ID of the user you want to check"
+
+`Needs the FF headers`
+
+`"authorization": "Same on what you used for your DBL webhook password"`
+
+`"user_id": "ID of the user you want to check"`
