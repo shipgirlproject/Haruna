@@ -21,3 +21,5 @@ This is where you check if someone voted or not.
 `"authorization": "Same on what you used for your DBL webhook password"`
 
 `"user_id": "ID of the user you want to check"`
+
+Returns true if the user voted, false if not
