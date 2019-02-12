@@ -23,3 +23,14 @@ This is where you check if someone voted or not.
 `"user_id": "ID of the user you want to check"`
 
 Returns true if the user voted, false if not
+
+## How to use this?
+`1. Clone this Repo`
+
+`2. Look on start.js and modify things as you see fit`
+
+`3. Put it on a folder separated from your bot or along side your bot`
+
+`4. fire it up via node start.js`
+
+`Note: This process is configured to run SEPARATELY from your bot. It's in its own process, so even your bot crashes, the api won't`
