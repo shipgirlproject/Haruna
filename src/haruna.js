@@ -20,8 +20,10 @@ class Haruna {
             setInterval(() => {
                 let counter = 0;
                 for (const [key, val] of this.storage) {
-                    if (Date.now() >= val.time) this.storage.delete(key)
-                    counter++
+                    if (Date.now() >= val.time) {
+                        this.storage.delete(key)
+                        counter++
+                    }
                 }
                 console.log(`[Cron Job] Database Purged, removed ${counter} users from vote db`)
             }, 300000)
