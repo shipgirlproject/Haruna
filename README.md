@@ -19,7 +19,9 @@ This is where you check if someone voted or not.
 `Needs the FF headers`
 
 `"authorization": "Same on what you used for your DBL webhook password"`
-`"checkWeekend": "(optional) boolean, true or false. If you want to check if the user voted in weekend"
+
+`"checkWeekend": "(optional) boolean, true or false. If you want to check if the user voted in weekend"`
+
 `"user_id": "ID of the user you want to check"`
 
 Returns true if the user voted, false if not
