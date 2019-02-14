@@ -25,7 +25,7 @@ class Haruna {
                         counter++
                     }
                 }
-                console.log(`[Cron Job] Database Purged, removed ${counter} ${counter > 1 ? 'user' : 'users'} from vote db`)
+                console.log(`[Cron Job] Database Purged, removed ${counter} ${counter < 1 ? 'user' : 'users'} from vote db`)
             }, 300000)
         })
     }
@@ -40,7 +40,7 @@ class Haruna {
             const duration = Date.now() + this.length
             this.storage.set(req.body.user, { time: duration, isWeekend: req.body.isWeekend})
             res.send('Sucess')
-            console.log(`[Notice] New vote stored, duration: ${(Math.floor(duration / 1000 / 60 / 60) - Math.floor(Date.now() / 1000 / 60 / 60)).toFixed(1)} hrs, user_id: ${req.body.user}, isWeekend ${req.body.isWeekend},`)
+            console.log(`[Notice] New vote stored, duration: ${(Math.floor(duration / 1000 / 60 / 60) - Math.floor(Date.now() / 1000 / 60 / 60))} hrs, user_id: ${req.body.user}, isWeekend ${req.body.isWeekend},`)
         }
     }
 
@@ -59,8 +59,8 @@ class Haruna {
                 }
             } else res.send(false)
             if (user) {
-                console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time left in cache ${(Math.floor(user.time / 1000 / 60 / 60) - Math.floor(Date.now() / 1000 / 60 / 60)).toFixed(1)} hr(s)`)
-            } else console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}.`)
+                console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time left in cache ${((user.time / 1000 / 60 / 60) - (Date.now() / 1000 / 60 / 60)).toFixed(1)} hr(s).`)
+            } else console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Not in cache.`)
         }
     }
 }
