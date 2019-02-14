@@ -20,12 +20,12 @@ class Haruna {
             setInterval(() => {
                 let counter = 0;
                 for (const [key, val] of this.storage) {
-                    if (Date.now() >= val.time) {
+                    if (val.time < Date.now()) {
                         this.storage.delete(key)
                         counter++
                     }
                 }
-                console.log(`[Cron Job] Database Purged, removed ${counter} users from vote db`)
+                console.log(`[Cron Job] Database Purged, removed ${counter} ${counter > 1 ? 'user' : 'users'} from vote db`)
             }, 300000)
         })
     }
@@ -37,9 +37,10 @@ class Haruna {
             console.log(req.headers)
         } else {
             if (this.storage.has(req.body.user)) this.storage.delete(req.body.user)
-            this.storage.set(req.body.user, { time: Date.now() + this.length, isWeekend: req.body.isWeekend})
+            const duration = Date.now() + this.length
+            this.storage.set(req.body.user, { time: duration, isWeekend: req.body.isWeekend})
             res.send('Sucess')
-            console.log(`[Notice] New vote stored, user_id: ${req.body.user}, isWeekend ${req.body.isWeekend}`)
+            console.log(`[Notice] New vote stored, duration: ${(Math.floor(duration / 1000 / 60 / 60) - Math.floor(Date.now() / 1000 / 60 / 60)).toFixed(1)} hrs, user_id: ${req.body.user}, isWeekend ${req.body.isWeekend},`)
         }
     }
 
@@ -49,15 +50,17 @@ class Haruna {
             console.log('[Notice] Rejected Get Request, Details below')
             console.log(req.headers)
         } else {
+            const user = this.storage.get(req.headers.user_id)
             if (req.headers.user_id) {
                 if (req.headers.checkWeekend) {
-                    const user = this.storage.get(req.headers.user_id)
                     res.send(user && user.isWeekend)
                 } else {
-                    res.send(this.storage.has(req.headers.user_id))
+                    res.send(user ? true : false)
                 }
             } else res.send(false)
-            console.log('[Notice] A get request served')
+            if (user) {
+                console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time left in cache ${(Math.floor(user.time / 1000 / 60 / 60) - Math.floor(Date.now() / 1000 / 60 / 60)).toFixed(1)} hr(s)`)
+            } else console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}.`)
         }
     }
 }
