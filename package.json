@@ -1,11 +1,8 @@
 {
   "name": "haruna",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A DBL Vote Webhook Handler",
-  "main": "start.js",
-    "scripts": {
-    "start": "node start.js"
-  },
+  "main": "index.js",
   "keywords": [
     "dbl",
     "discordbots",

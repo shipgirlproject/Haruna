@@ -25,7 +25,7 @@ class Haruna {
                         counter++
                     }
                 }
-                console.log(`[Cron Job] Database Purged, removed ${counter} ${counter < 1 ? 'user' : 'users'} from vote db`)
+                console.log(`[Cron Job] Database Purged, removed ${counter} ${counter <= 1 ? 'user' : 'users'} from vote db`)
             }, 300000)
         })
     }
@@ -40,7 +40,7 @@ class Haruna {
             const duration = Date.now() + this.length
             this.storage.set(req.body.user, { time: duration, isWeekend: req.body.isWeekend})
             res.send('Sucess')
-            console.log(`[Notice] New vote stored, duration: ${(Math.floor(duration / 1000 / 60 / 60) - Math.floor(Date.now() / 1000 / 60 / 60))} hrs, user_id: ${req.body.user}, isWeekend ${req.body.isWeekend},`)
+            console.log(`[Notice] New vote stored, duration: ${(Math.floor(duration / 1000 / 60 / 60) - Math.floor(Date.now() / 1000 / 60 / 60))} hrs, user_id: ${req.body.user}, isWeekend: ${req.body.isWeekend}.`)
         }
     }
 
