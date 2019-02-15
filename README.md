@@ -10,10 +10,14 @@ Simple webhook vote handler for Discord Bot List https://discordbots.org/ to hel
 Why Haruna? Cause Haruna is cute uwu.
 
 ## API Endpoints
-### /vote/ "Post"
+### /vote/ "POST"
 This is the one that you use for DBL, this is where DBL will send the votes from your bot.
 
-### /hasVoted/ "Get"
+<p align="center">
+  <img src="https://i.imgur.com/fBhIdVC.jpg">
+</p>
+
+### /hasVoted/ "GET"
 This is where you check if someone voted or not.
 
 `Needs the FF headers`
@@ -24,16 +28,29 @@ This is where you check if someone voted or not.
 
 `"user_id": "ID of the user you want to check"`
 
-Returns true if the user voted, false if not
+Returns "TRUE" if the user voted, "FALSE" if not.
+
+### /getVotedTime/ "GET"
+This is if you want to check how long the user will stay in database.
+
+`Needs the FF headers`
+
+`"authorization": "Same on what you used for your DBL webhook password"`
+
+`"user_id": "ID of the user you want to check"`
+
+Returns the "MS" of how long the user will be in cache, "FALSE" if the user haven't voted.
 
 ## How to use this?
 `1. Clone this Repo`
 
-`2. Look on start.js and modify things as you see fit`
+`2. Look on examples folder and look in server.js then change stuffs as you see fit.`
 
 `3. Put it on a folder separated from your bot or along side your bot`
 
-`4. fire it up via node start.js`
+`4. Then just use the server.js in examples folder to start this api. (Provided that you modified it to your needs)`
+
+`5. Look on client.js in examples folder to see how you send a request to use this api.`
 
 You may want to fire it up with pm2 or something so that it will not close, as well restart it if it crashes due to some reason
 
