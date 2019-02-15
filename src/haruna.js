@@ -60,7 +60,7 @@ class Haruna {
                     res.send(user ? true : false)
                 }
             } else res.send(false)
-            console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time Left: ${user.time ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
+            console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
         }
     }
 
@@ -74,7 +74,7 @@ class Haruna {
             if (user && req.headers.user_id) {
                 res.send(user.time - Date.now())
             } else res.send(false)
-            console.log(`[Notice] Checked Vote Time for user_id ${req.headers.user_id}. Time Left: ${user.time ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
+            console.log(`[Notice] Checked Vote Time for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
         }
     }
 }
