@@ -7,6 +7,7 @@ class Haruna {
             fetchAll: true,
             dataDir: dir ? dir : ''
         })
+        this.port = port
         this.auth = auth
         this.length = length
         /*
