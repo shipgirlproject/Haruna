@@ -1,7 +1,12 @@
 const fastify = require('fastify')()
 const enmap = require('enmap')
+const fetch = require('node-fetch')
+const { WebhookClient } = require('discord.js')
+const { version } = require('../package.json')
 class Haruna {
-    constructor(port, auth, length, dir) {
+    constructor(port, auth, length, dbl_token, dir) {
+        if (!port || !auth || !length || !dbl_token)
+            throw new Error('One of the required constructors are missing, Please make sure they are set correctly and try again')
         this.storage = new enmap({
             name: 'votes',
             fetchAll: true,
@@ -10,14 +15,15 @@ class Haruna {
         this.port = port
         this.auth = auth
         this.length = length
+        this.dbl_token = dbl_token
         /*
         * 
         *
         */
         this.storage.defer.then(() => {
-            fastify.post('/vote/', (req, res) => this.onVote(req, res))
-            fastify.get('/hasVoted/', (req, res) => this.onCheck(req, res))
-            fastify.get('/getVotedTime/', (req, res) => this.onCheckInfo(req, res))
+            fastify.post('/vote/', (req, res) => this._onVote(req, res))
+            fastify.get('/hasVoted/', (req, res) => this._onCheck(req, res))
+            fastify.get('/getVotedTime/', (req, res) => this._onCheckInfo(req, res))
             fastify.listen(port, '0.0.0.0', () => console.log(`[Notice] Haruna's Vote Service is now Online, listening @ ${port}`))
             setInterval(() => {
                 let counter = 0;
@@ -28,11 +34,59 @@ class Haruna {
                     }
                 }
                 console.log(`[Cron Job] Database Purged, removed ${counter} ${counter <= 1 ? 'user' : 'users'} from vote db`)
+                if (this.webhook) this.webhook.send({
+                    embeds: [{
+                        color: 0x9B767B,
+                        description: `📤 Cleaned **${counter} ${counter <= 1 ? 'user' : 'users'}** from database`,
+                        timestamp: new Date(),
+                        footer: {
+                            text: `💾 ${this.storage.size} stored votes`
+                        }
+                    }]
+                }).catch(console.error)
             }, 300000)
         })
     }
 
-    onVote(req, res) {
+    setWebhook(id, token) {
+        if (this.webhook) throw new Error('Webhook already running')
+        this.webhook = new WebhookClient(id, token)
+        if (this.webhook) this.webhook.send({
+			embeds: [{
+                color: 0x90ee90,
+                description: '✅ **Voting API intialized**',
+                timestamp: new Date(),
+                footer: {
+                    text: `Haruna Vote Handler v${version} `
+                }
+			}]
+		}).catch(console.error)
+    }
+
+    async _fetch_user(id) {
+        const req = await fetch(`https://discordbots.org/api/users/${id}`, {
+            headers: { authorization: this.dbl_token }
+        })
+        const user = await req.json()
+        return user.username + '#' + user.discriminator
+    }
+
+    async _send_new_vote_embed(user_id) {
+        if (!this.webhook) return 
+        const tag = await this._fetch_user(user_id)
+        await this.webhook.send({
+            embeds: [{
+                color: 0x095562,
+                description: `📥 New User: **@${tag}** (${user_id}) voted`,
+                timestamp: new Date(),
+                footer: {
+                    text: `💾 ${this.storage.size} stored votes`
+                }
+            }]
+        })
+    }
+
+    _onVote(req, res) {
         if (req.headers.authorization !== this.auth) {
             res.status(401).send('Unauthorized')
             console.log('[Notice] Rejected Post Request, Details Below')
@@ -43,10 +97,11 @@ class Haruna {
             this.storage.set(req.body.user, { time: duration, isWeekend: req.body.isWeekend})
             res.send('Sucess')
             console.log(`[Notice] New vote stored, Duration: ${Math.floor((duration - Date.now()) / 1000 / 60 / 60)} hrs, user_id: ${req.body.user}, isWeekend: ${req.body.isWeekend}.`)
+            this._send_new_vote_embed(req.body.user).catch(console.error)
         }
     }
 
-    onCheck(req, res) {
+    _onCheck(req, res) {
         if (req.headers.authorization !== this.auth) {
             res.status(401).send('Unauthorized')
             console.log('[Notice] Rejected hasVoted Request, Details below')
@@ -64,7 +119,7 @@ class Haruna {
         }
     }
 
-    onCheckInfo(req, res) {
+    _onCheckInfo(req, res) {
         if (req.headers.authorization !== this.auth) {
             res.status(401).send('Unauthorized')
             console.log('[Notice] Rejected getVotedTime Request, Details below')

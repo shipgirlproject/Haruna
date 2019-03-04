@@ -1,6 +1,6 @@
 {
   "name": "haruna",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A DBL Vote Webhook Handler",
   "main": "index.js",
   "keywords": [
@@ -13,7 +13,9 @@
   "dependencies": {
     "better-sqlite-pool": "github:eslachance/better-sqlite-pool",
     "enmap": "^4.7.1",
-    "fastify": "^1.14.1"
+    "fastify": "^1.14.1",
+    "discord.js": "^11.4.2",
+    "node-fetch": "^2.3.0"
   },
     "engines": {
     "node": "8.x"
