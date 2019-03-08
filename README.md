@@ -75,7 +75,7 @@ handler.setWebhook('discord_webhook_id', 'discord_webhook_token')
 ## How to use this?
 `1. Clone this Repo`
 
-`2. Put it on a folder separated from your bot or along side your bot (If you have a server, If not then cloning it to a hosting like glitch wil do, skip this step if thats the case)`
+`2. Put it on a folder separated from your bot or along side your bot (If you have a server, If not then cloning it to a hosting like glitch will do, skip this step if thats the case)`
 
 `3. Copy and modify the example code ABOVE as you see fit for starting the api`
 
