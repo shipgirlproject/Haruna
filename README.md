@@ -42,7 +42,7 @@ Return value:
 ```
 
 ## Some Documentation?
-[Code Documentation](/api)
+[Code Documentation](/Haruna/api)
 
 ## Example Code in starting the API
 Check [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
