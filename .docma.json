@@ -1,0 +1,15 @@
+{
+    "src": [{
+        "haruna": "./src/*.js",
+        "start": "./README.md"
+    }],
+    "dest": "./docs",
+    "clean": true,
+    "jsdoc": {
+        "plugins": ["plugins/markdown"]
+    },
+    "app": {
+        "title": "Haruna Documentation",
+        "entrance": "content:start"
+    }
+}

@@ -1,0 +1,58 @@
+
+<html><head></head><body><h1 id="haruna">Haruna</h1>
+<hr />
+<p>&lt;p align="center"&gt;
+  &lt;img src="https://vignette.wikia.nocookie.net/kancolle/images/1/1a/Haruna_Kai_Ni_Summer_Full.png/revision/latest?cb=20160801085517"&gt;
+&lt;/p&gt;
+
+</p>
+<p>The ShipGirl Project. Haruna, the helping hand of Kashima. <code>(c) Kancolle for Haruna.</code></p>
+<p>Simple webhook vote handler for <a href="https://discordbots.org/">Discord Bot List</a> to help with <a href="https://discordbots.org/bot/424137718961012737">Kashima</a></p>
+<p>Why Haruna? Cause Haruna is cute uwu.</p>
+<p>This API / webhook handler is <del>oversimplified</del>simple to use. As long as you can start it, it will handle everything for you to save you the hassle of creating your own vote handler.</p>
+<blockquote>
+<p>Now even comes with <a href="server.js"><code>server.js</code></a>, all you need to run to have your vote handler ready!</p>
+</blockquote>
+<h2 id="api-endpoints">API Endpoints</h2>
+<hr />
+<h3 id="post--vote"><code>POST</code> /vote</h3>
+<p>This is the one that you use for DBL, this is where DBL will send the votes from your bot.</p>
+<p>&lt;p align="center"&gt;
+  &lt;img src="https://i.imgur.com/fBhIdVC.jpg"&gt;
+&lt;/p&gt;
+
+</p>
+<h3 id="get--hasvoted"><code>GET</code> /hasVoted</h3>
+<p>To check if someone voted or not.</p>
+<pre><code>HTTP Headers:
+  &lt;String&gt; authorization - Authorization key
+  &lt;String&gt; user_id - User ID to check
+  &lt;Boolean&gt; checkWeekend - (Optional) CHeck if vote multiplier on this user is enabled (weekend special)
+Return value:
+  &lt;Boolean&gt; - `true` if user voted or vote multiplier is enabled, `false` if user did not vote.</code></pre><h3 id="get--getvotedtime"><code>GET</code> /getVotedTime</h3>
+<p>To check how long the user will stay in database.</p>
+<pre><code>HTTP Headers:
+  &lt;String&gt; authorization - Authorization key
+  &lt;String&gt; user_id - User ID to check
+Return value:
+  &lt;Number|Boolean&gt; - The duration of how long the user will be in cache (in ms), `false` if the user haven't voted.</code></pre><h2 id="some-documentation-">Some Documentation?</h2>
+<hr />
+<p><a href="">Code Documentation</a></p>
+<h2 id="example-code-in-starting-the-api">Example Code in starting the API</h2>
+<hr />
+<p>Check <a href="server.js"><code>server.js</code></a></p>
+<h2 id="how-to-use-this-">How to use this?</h2>
+<hr />
+<ol>
+<li>Clone this repo</li>
+<li>Make a file <code>config.json</code> that contains options for Haruna</li>
+<li>Run <a href="server.js"><code>server.js</code></a></li>
+<li>If you think <a href="server.js"><code>server.js</code></a> is not enough, then you should use your own parent process, or maybe running it on your bot (not recommended)</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<hr />
+<ul>
+<li>You might want to run it with <a href="http://pm2.keymetrics.io/"><code>pm2</code></a> or system services so any unexpected restarts will be handled and better logging</li>
+<li>This is a standalone API, so as long as the parent process is alive, it should not die.</li>
+</ul>
+</body></html>
