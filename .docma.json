@@ -11,7 +11,7 @@
     "app": {
         "title": "Haruna Documentation",
         "entrance": "content:readme",
-        "base": "/haruna",
+        "base": "/Haruna",
         "routing": {
             "method": "path"
         }
