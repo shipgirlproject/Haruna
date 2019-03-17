@@ -1,16 +1,19 @@
 {
-    "src": [{
-        "haruna": "./src/*.js",
-        "start": "./README.md"
-    }],
+    "src": [
+        "./src/*.js",
+        "./README.md"
+    ],
     "dest": "./docs",
-    "base": "./docs",
     "clean": true,
     "jsdoc": {
         "plugins": ["plugins/markdown"]
     },
     "app": {
         "title": "Haruna Documentation",
-        "entrance": "content:start"
+        "entrance": "content:readme",
+        "base": "/haruna",
+        "routing": {
+            "method": "path"
+        }
     }
 }
