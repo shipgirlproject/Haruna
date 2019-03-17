@@ -4,6 +4,7 @@
         "start": "./README.md"
     }],
     "dest": "./docs",
+    "base": "./docs",
     "clean": true,
     "jsdoc": {
         "plugins": ["plugins/markdown"]
