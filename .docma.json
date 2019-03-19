@@ -1,0 +1,19 @@
+{
+    "src": [
+        "./src/*.js",
+        "./README.md"
+    ],
+    "dest": "./docs",
+    "clean": true,
+    "jsdoc": {
+        "plugins": ["plugins/markdown"]
+    },
+    "app": {
+        "title": "Haruna Documentation",
+        "entrance": "content:readme",
+        "base": "/Haruna",
+        "routing": {
+            "method": "path"
+        }
+    }
+}
