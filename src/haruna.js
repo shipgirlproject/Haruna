@@ -49,7 +49,19 @@ class Haruna {
             this.app.get('/', (req, res) => this._index(req, res))
             this.app.listen(this.options.port)
                 .catch(err => err && console.error('[Error] Server failed to start. Details: ', err.message))
-                .then(addr => console.log("[Notice] Haruna's Vote Service is now Online, listening @ ", addr))
+                .then(addr => {
+                    console.log("[Notice] Haruna's Vote Service is now Online, listening @ ", addr)
+                    if (this.options.webhook) this.execWebhook({
+                        embeds: [{
+                            color: 0x90ee90,
+                            description: '✅ **Voting API intialized**',
+                            timestamp: new Date(),
+                            footer: {
+                                text: `Haruna Vote Handler v${version}`
+                            }
+                        }]
+                    }).catch(console.error)
+                })
 
             setInterval(async () => {
                 let counter = 0;
@@ -67,17 +79,6 @@ class Haruna {
                         timestamp: new Date(),
                         footer: {
                             text: `💾 ${this.storage.size} stored votes`
-                        }
-                    }]
-                }).catch(console.error)
-
-                if (this.options.webhook) this.execWebhook({
-                    embeds: [{
-                        color: 0x90ee90,
-                        description: '✅ **Voting API intialized**',
-                        timestamp: new Date(),
-                        footer: {
-                            text: `Haruna Vote Handler v${version}`
                         }
                     }]
                 }).catch(console.error)
