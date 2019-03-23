@@ -8,6 +8,9 @@
     "jsdoc": {
         "plugins": ["plugins/markdown"]
     },
+    "markdown": {
+        "sanitize": false
+    },
     "app": {
         "title": "Haruna Documentation",
         "entrance": "content:readme",

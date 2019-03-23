@@ -12,6 +12,8 @@ Why Haruna? Cause Haruna is cute uwu.
 This API / webhook handler is ~~oversimplified~~simple to use. As long as you can start it, it will handle everything for you to save you the hassle of creating your own vote handler.
 > Now even comes with [`server.js`](https://github.com/deivu/haruna/blob/master/server.js), all you need to run to have your vote handler ready!
 
+
+
 ## API Endpoints
 ### `POST` /vote
 This is the one that you use for DBL, this is where DBL will send the votes from your bot.
@@ -41,8 +43,12 @@ Return value:
   <Number|Boolean> - The duration of how long the user will be in cache (in ms), `false` if the user haven't voted.
 ```
 
+
+
 ## Some Documentation?
-[Code Documentation](/Haruna/api)
+[Code Documentation](https://deivu.github.io/Haruna/api)
+
+
 
 ## Example Code in starting the API
 Check [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
@@ -50,10 +56,13 @@ Check [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
 
 ## How to use this?
 1. Clone this repo
-2. Make a file `config.json` that contains options for Haruna
+2. Make a file `config.json`/`config.js` that contains options for Haruna (Options are passed to the constructor, check [here](https://deivu.github.io/Haruna/api))
+> Config file can be both `.js` or `.json`. There are examples for them, see [configExample.json](https://github.com/deivu/haruna/blob/master/configExample.json) and [configExample.js](https://github.com/deivu/haruna/blob/master/configExample.js)
 3. Run [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
 4. If you think [`server.js`](https://github.com/deivu/haruna/blob/master/server.js) is not enough, then you should use your own parent process, or maybe running it on your bot (not recommended)
 
+
+
 ## Notes
-* You might want to run it with [`pm2`](http://pm2.keymetrics.io/) or system services so any unexpected restarts will be handled and better logging
-* This is a standalone API, so as long as the parent process is alive, it should not die.
+* You might want to run Haruna with [`pm2`](http://pm2.keymetrics.io/) or native services so any unexpected restarts will be handled and better logging
+* This is a standalone API, so as long as the parent process is alive, disconnections shold be handled automatically.
