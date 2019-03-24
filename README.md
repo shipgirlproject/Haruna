@@ -65,4 +65,4 @@ Check [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
 
 ## Notes
 * You might want to run Haruna with [`pm2`](http://pm2.keymetrics.io/) or native services so any unexpected restarts will be handled and better logging
-* This is a standalone API, so as long as the parent process is alive, disconnections shold be handled automatically.
+* This is a standalone API, so as long as the parent process is alive, disconnections should be handled automatically.
