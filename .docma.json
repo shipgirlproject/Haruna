@@ -12,11 +12,8 @@
         "sanitize": false
     },
     "app": {
-        "title": "Haruna Documentation",
+        "title": "Haruna | Simple webhook vote handler for Discord Bot List",
         "entrance": "content:readme",
-        "base": "/Haruna",
-        "routing": {
-            "method": "path"
-        }
+        "base": "/Haruna"
     }
 }
