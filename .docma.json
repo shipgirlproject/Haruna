@@ -14,6 +14,9 @@
     "app": {
         "title": "Haruna | Simple webhook vote handler for Discord Bot List",
         "entrance": "content:readme",
-        "base": "/Haruna"
+        "base": "/Haruna",
+        "routing": {
+            "method": "path"
+        }
     }
 }
