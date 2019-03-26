@@ -1,7 +1,6 @@
 const fastify = require('fastify')
 const enmap = require('enmap')
 const fetch = require('node-fetch')
-const { WebhookClient } = require('discord.js')
 const { version } = require('../package.json')
 const defaultSettings = {
     port: 8000,
@@ -21,7 +20,7 @@ class Haruna {
      * @param {string} options.auth Authentication key. Will be used when querying the server
      * @param {number} [options.length=43200000] A vote's lifetime in miliseconds. Defaults to 12 hours
      * @param {string} options.token DBL token
-     * @param {string} [options.dir='./'] The directory of the database
+     * @param {string} [options.dir='./data'] The directory of the database
      * @param {https} options.https HTTPS option for fastify. Omit this if you dont use it
      * @param {webhook} options.webhook The webhook **link**
      */

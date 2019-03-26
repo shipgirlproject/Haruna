@@ -1,0 +1,9 @@
+{
+    "port": 8080,
+    "auth": "owo",
+    "length": 43200000,
+    "token": "mysuperdbltoken",
+    "dir": "./data",
+    "https": {},
+    "webhook": "discordwebhooklink"
+}
