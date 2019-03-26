@@ -95,6 +95,7 @@ class Haruna {
             headers: { authorization: this.options.token }
         })
         const user = await req.json()
+        if (!user.username || !user.discriminator) throw user
         return user.username + '#' + user.discriminator
     }
 
