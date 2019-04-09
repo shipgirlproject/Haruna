@@ -1,3 +1,4 @@
+global.Promise = require('bluebird')
 const fastify = require('fastify')
 const enmap = require('enmap')
 const fetch = require('node-fetch')
