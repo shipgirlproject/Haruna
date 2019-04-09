@@ -1,12 +1,11 @@
-const Haruna = require('.')
+const Haruna = require('./index.js')
 const { existsSync } = require('fs')
-if (!existsSync('./config.json') || !existsSync('./config.js')) throw new Error('No config file found!')
 
 let config
 if (existsSync('./config.json')) {
     config = require('./config.json')
-} else {
+} else if (existsSync('./config.json')) {
     config = require('./config.js')
-}
+} else throw new Error('No config file found!')
 
 const server = new Haruna(config)
