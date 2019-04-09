@@ -7,6 +7,5 @@ module.exports = {
     "length": 43200000,
     "token": "mysuperdbltoken",
     "dir": "",
-    "https": {},
     "webhook": "discordwebhooklink"
 }

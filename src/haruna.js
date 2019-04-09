@@ -9,7 +9,6 @@ const defaultSettings = {
     length: 43200000,
     token: '',
     dir: '',
-    https: null,
     webhook:''
 }
 
@@ -30,12 +29,8 @@ class Haruna {
         if (!this.options.auth || !this.options.token)
             throw new Error('Authentication key or DBL token not specified')
 
-        if (this.options.https) {
-            this.app = fastify({https: this.options.https})
-        } else {
-            this.app = fastify()
-        }
-        
+        this.app = fastify()
+
         this.storage = new enmap({
             name: 'votes',
             fetchAll: true,
@@ -116,24 +111,25 @@ class Haruna {
 
     _onVote(req, res) {
         if (req.headers.authorization !== this.options.auth) {
-            res.status(401).send('Unauthorized')
             console.log('[Notice] Rejected Post Request, Details Below\n', req.headers)
+            res.status(401).send('Unauthorized')
         } else {
             if (this.storage.has(req.body.user)) this.storage.delete(req.body.user)
             const duration = Date.now() + this.options.length
             this.storage.set(req.body.user, { time: duration, isWeekend: req.body.isWeekend})
-            res.send('Sucess')
             console.log(`[Notice] New vote stored, Duration: ${Math.floor((duration - Date.now()) / 1000 / 60 / 60)} hrs, user_id: ${req.body.user}, isWeekend: ${req.body.isWeekend}.`)
             this._send_new_vote_embed(req.body.user).catch(console.error)
+            res.send('Sucess')
         }
     }
 
     _onCheck(req, res) {
         if (req.headers.authorization !== this.options.auth) {
-            res.status(401).send('Unauthorized')
             console.log('[Notice] Rejected hasVoted Request, Details below\n', req.headers)
+            res.status(401).send('Unauthorized')
         } else {
             const user = this.storage.get(req.headers.user_id)
+            console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
             if (req.headers.user_id) {
                 if (req.headers.checkWeekend) {
                     res.send(user && user.isWeekend)
@@ -141,20 +137,19 @@ class Haruna {
                     res.send(!!user)
                 }
             } else res.send(false)
-            console.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
         }
     }
 
     _onCheckInfo(req, res) {
         if (req.headers.authorization !== this.options.auth) {
-            res.status(401).send('Unauthorized')
             console.log('[Notice] Rejected getVotedTime Request, Details below\n', req.headers)
+            res.status(401).send('Unauthorized')
         } else {
             const user = this.storage.get(req.headers.user_id)
+            console.log(`[Notice] Checked Vote Time for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
             if (user && req.headers.user_id) {
                 res.send(user.time - Date.now())
             } else res.send(false)
-            console.log(`[Notice] Checked Vote Time for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).`: 'Not in Database.'}`)
         }
     }
 
