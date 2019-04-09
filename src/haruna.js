@@ -47,7 +47,7 @@ class Haruna {
             this.app.get('/hasVoted', (req, res) => this._onCheck(req, res))
             this.app.get('/getVotedTime', (req, res) => this._onCheckInfo(req, res))
             this.app.get('/', (req, res) => this._index(req, res))
-            this.app.listen(this.options.port)
+            this.app.listen(this.options.port, '0.0.0.0')
                 .catch(err => err && console.error('[Error] Server failed to start. Details: ', err.message))
                 .then(addr => {
                     console.log("[Notice] Haruna's Vote Service is now Online, listening @ ", addr)
