@@ -46,7 +46,7 @@ Return value:
 
 
 ## Some Documentation?
-[Code Documentation](https://deivu.github.io/Haruna/api)
+[Code Documentation](https://deivu.github.io/Haruna?api)
 
 
 
@@ -56,7 +56,7 @@ Check [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
 
 ## How to use this?
 1. Clone this repo
-2. Make a file `config.json`/`config.js` that contains options for Haruna (Options are passed to the constructor, check [here](https://deivu.github.io/Haruna/api))
+2. Make a file `config.json`/`config.js` that contains options for Haruna (Options are passed to the constructor, check [here](https://deivu.github.io/Haruna?api))
 > Config file can be both `.js` or `.json`. There are examples for them, see [configExample.json](https://github.com/deivu/haruna/blob/master/configExample.json) and [configExample.js](https://github.com/deivu/haruna/blob/master/configExample.js)
 3. Run [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
 4. If you think [`server.js`](https://github.com/deivu/haruna/blob/master/server.js) is not enough, then you should use your own parent process, or maybe running it on your bot (not recommended)
