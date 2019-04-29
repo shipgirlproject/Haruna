@@ -1,41 +1,46 @@
 {
-	"src": [
-		"./src/*.js",
-		"./README.md"
-	],
-	"dest": "./docs",
-	"clean": true,
-	"jsdoc": {
-		"hierarchy": "true",
-		"plugins": [
-			"plugins/markdown"
-		]
-	},
-	"markdown": {
-		"sanitize": false
-	},
-	"app": {
-		"title": "Haruna | Simple webhook vote handler for Discord Bot List",
-		"entrance": "content:readme",
-		"base": "/Haruna"
-	},
-	"template": {
-		"options": {
-			"title": {
-				"label": "Haruna",
-				"href": "."
-			},
-			"navItems": [{
-					"label": "Readme",
-					"href": "."
-				}, {
-					"label": "Documentation",
-					"href": "?api"
-				}, {
-					"label": "GitHub",
-					"href": "https://github.com/Deivu/Haruna"
-				}
-			]
-		}
-	}
+    "src":[
+        "./src/*.js",
+        "./README.md"
+    ],
+    "dest":"./docs",
+    "jsdoc":{
+        "hierarchy":"true",
+        "plugins":[
+            "plugins/markdown"
+        ]
+    },
+    "markdown":{
+        "sanitize":false
+    },
+    "app":{
+        "title":"Haruna | Simple webhook vote handler for Discord Bot List",
+        "routing":"query",
+        "entrance":"content:readme",
+        "base":"/Haruna"
+    },
+    "template":{
+        "options":{
+            "title":{
+                "label":"Haruna",
+                "href":"."
+            },
+            "navbar":{
+                "menu":[
+                    {
+                        "label":"Readme",
+                        "href":"."
+                    },
+                    {
+                        "label":"Documentation",
+                        "href":"?api"
+                    },
+                    {
+                        "label":"GitHub",
+                        "href":"https://github.com/Deivu/Haruna"
+                    }
+                ]
+            }
+        }
+    }
 }
