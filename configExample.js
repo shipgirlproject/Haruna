@@ -6,6 +6,7 @@ module.exports = {
     "auth": "owo",
     "length": 43200000,
     "token": "mysuperdbltoken",
+    "logging": true,
     "dir": "",
     "webhook": "discordwebhooklink"
 }

@@ -12,13 +12,13 @@
   "license": "MIT",
   "dependencies": {
     "better-sqlite-pool": "github:eslachance/better-sqlite-pool",
-    "enmap": "^4.7.1",
-    "fastify": "^1.14.1",
+    "enmap": "^4.8.7",
+    "fastify": "^2.4.1",
     "bluebird": "^3.5.4",
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.6.0"
   },
   "engines": {
-    "node": "8.x"
+    "node": "10.x"
   },
   "repository": {
     "url": "https://github.com/Deivu/Haruna"

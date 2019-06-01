@@ -2,16 +2,34 @@
 <html><head></head><body><h1 id="haruna">Haruna</h1>
 <hr />
 <p align="center">
-  <img src="https://vignette.wikia.nocookie.net/kancolle/images/1/1a/Haruna_Kai_Ni_Summer_Full.png/revision/latest?cb=20160801085517" style="max-width: 100%;">
+  <img src="https://vignette.wikia.nocookie.net/kancolle/images/6/61/Haruna_Shopping_Full.png/revision/latest/" style="max-width: 100%;">
 </p>
 
 <p>The ShipGirl Project. Haruna, the helping hand of Kashima. <code>(c) Kancolle for Haruna.</code></p>
 <p>Simple webhook vote handler for <a href="https://discordbots.org/">Discord Bot List</a> to help with <a href="https://discordbots.org/bot/424137718961012737">Kashima</a></p>
 <p>Why Haruna? Cause Haruna is cute uwu.</p>
 <p>This API / webhook handler is <del>oversimplified</del>simple to use. As long as you can start it, it will handle everything for you to save you the hassle of creating your own vote handler.</p>
+<h3 id="use-case-of-this-api">Use case of this API.</h3>
+<blockquote>
+<p>You want a voting server that is running independently from your bot, so that even your bot crashes, yey votes will still register</p>
+</blockquote>
+<blockquote>
+<p>You want a non blocking voting check "Heck this is an API lmao"</p>
+</blockquote>
+<blockquote>
+<p>You don't want to make your own webserver api cause it is a hassle, Yes this is perfect then</p>
+</blockquote>
+<blockquote>
+<p>You want a fast and tested API, yes, I tested this on prod lmao</p>
+</blockquote>
+<h3 id="now-more-easier-to-host">Now more easier to host</h3>
 <blockquote>
 <p>Now even comes with <a href="https://github.com/deivu/haruna/blob/master/server.js"><code>server.js</code></a>, all you need to run to have your vote handler ready!</p>
 </blockquote>
+<blockquote>
+<p>Just copy the repo and put it on your server, then start server.js after you configured the config files, ain't that easy?</p>
+</blockquote>
+<h3 id="scroll-down-at-the-bottom-for-installation-notes-support-for-using-this-and-some-more-info">Scroll Down at the bottom for Installation Notes, Support for using this and some more Info.</h3>
 <h2 id="api-endpoints">API Endpoints</h2>
 <hr />
 <h3 id="post--vote"><code>POST</code> /vote</h3>
@@ -39,17 +57,23 @@ Return value:
 <h2 id="example-code-in-starting-the-api">Example Code in starting the API</h2>
 <hr />
 <p>Check <a href="https://github.com/deivu/haruna/blob/master/server.js"><code>server.js</code></a></p>
+<h2 id="example-code-in-querying-the-api-">Example Code in Querying the API?</h2>
+<hr />
+<p>Check <a href="https://github.com/Deivu/Haruna/blob/master/examples/client.js"><code>client.js</code></a></p>
 <h2 id="how-to-use-this-">How to use this?</h2>
 <hr />
-<ol>
-<li>Clone this repo</li>
-<li>Make a file <code>config.json</code>/<code>config.js</code> that contains options for Haruna (Options are passed to the constructor, check <a href="https://deivu.github.io/Haruna?api">here</a>)<blockquote>
+<p>Step 1: Clone this repo</p>
+<p>Step 2: Make a file <code>config.json</code>/<code>config.js</code> that contains options for Haruna (Options are passed to the constructor, check <a href="https://deivu.github.io/Haruna?api">here</a>)</p>
+<blockquote>
 <p>Config file can be both <code>.js</code> or <code>.json</code>. There are examples for them, see <a href="https://github.com/deivu/haruna/blob/master/configExample.json">configExample.json</a> and <a href="https://github.com/deivu/haruna/blob/master/configExample.js">configExample.js</a></p>
 </blockquote>
-</li>
-<li>Run <a href="https://github.com/deivu/haruna/blob/master/server.js"><code>server.js</code></a></li>
-<li>If you think <a href="https://github.com/deivu/haruna/blob/master/server.js"><code>server.js</code></a> is not enough, then you should use your own parent process, or maybe running it on your bot (not recommended)</li>
-</ol>
+<p>Step 3: Run <a href="https://github.com/deivu/haruna/blob/master/server.js"><code>server.js</code></a></p>
+<p>Step 4: Check <a href="https://github.com/Deivu/Haruna/blob/master/examples/client.js"><code>client.js</code></a> if you dont know how to make a simple HTTP request smh.</p>
+<p>Step 5: If you think <a href="https://github.com/deivu/haruna/blob/master/server.js"><code>server.js</code></a> is not enough, then you should use your own parent process, or maybe running it on your bot (not recommended)</p>
+<h2 id="support">Support</h2>
+<hr />
+<p><strong>We provide support for usage of this API in our Official Server <a href="https://discordapp.com/invite/FVqbtGu">in HERE</a></strong></p>
+<p>Ask on <strong>#Bot-Support</strong> channel and make sure you indicate support for this API.</p>
 <h2 id="notes">Notes</h2>
 <hr />
 <ul>

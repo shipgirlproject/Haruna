@@ -89,3 +89,6 @@ config.json
 
 # default db folder
 data/
+
+# etc etc
+.idea
