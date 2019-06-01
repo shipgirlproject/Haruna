@@ -35,7 +35,7 @@ class Haruna {
             throw new Error('Authentication key or DBL token not specified')
 
         /**
-         * Options that is used to initialize Haruna with
+         * An Fastify instance
          * @type {external:Fastify}
          */
         this.app = fastify()
@@ -118,7 +118,7 @@ class Haruna {
      * @param {string} id User to fetch for.
      * @returns {Promise<string>}
      */
-    async _fetch_user(id) {
+    async fetchUser(id) {
         const req = await fetch(`https://discordbots.org/api/users/${id}`, {
             headers: { authorization: this.options.token }
         })
@@ -134,7 +134,7 @@ class Haruna {
      */
     async _send_new_vote_embed(user_id) {
         if (!this.options.webhook) return
-        const tag = await this._fetch_user(user_id)
+        const tag = await this.fetchUser(user_id)
         await this.execWebhook({
             embeds: [{
                 color: 0x095562,
