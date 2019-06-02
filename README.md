@@ -23,6 +23,8 @@ This API / webhook handler is ~~oversimplified~~simple to use. As long as you ca
 ### Now more easier to host
 > Now even comes with [`server.js`](https://github.com/deivu/haruna/blob/master/server.js), all you need to run to have your vote handler ready!
 
+> Now also comes with an API wrapper [`HarunaRequest.js`](https://github.com/Deivu/Haruna/blob/master/wrapper/HarunaRequest.js) for newbies that cant code a request.
+
 > Just copy the repo and put it on your server, then start server.js after you configured the config files, ain't that easy?
 
 ### Scroll Down at the bottom for Installation Notes, Support for using this and some more Info.
@@ -63,7 +65,10 @@ Return value:
 Check [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
 
 ## Example Code in Querying the API?
-Check [`client.js`](https://github.com/Deivu/Haruna/blob/master/examples/client.js)
+Check [`RequestWithoutWrapper.js`](https://github.com/Deivu/Haruna/blob/master/examples/RequestWithoutWrapper.js)
+
+## API Wrapper?
+Check [`HarunaRequest.js`](https://github.com/Deivu/Haruna/blob/master/wrapper/HarunaRequest.js)
 
 ## How to use this?
 Step 1: Clone this repo
@@ -74,9 +79,11 @@ Step 2: Make a file `config.json`/`config.js` that contains options for Haruna (
 
 Step 3: Run [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
 
-Step 4: Check [`client.js`](https://github.com/Deivu/Haruna/blob/master/examples/client.js) if you dont know how to make a simple HTTP request smh.
+Step 4: Check [`RequestWithoutWrapper.js`](https://github.com/Deivu/Haruna/blob/master/examples/RequestWithoutWrapper.js) if you dont know how to make a simple HTTP request smh.
 
 Step 5: If you think [`server.js`](https://github.com/deivu/haruna/blob/master/server.js) is not enough, then you should use your own parent process, or maybe running it on your bot (not recommended)
+
+Step 6: Read the [`examples`](https://github.com/Deivu/Haruna/tree/master/examples) so that you can see 2 ways to query your request to this api
 
 ## Support
 **We provide support for usage of this API in our Official Server [in HERE](https://discordapp.com/invite/FVqbtGu)**
