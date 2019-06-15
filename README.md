@@ -42,7 +42,7 @@ To check if someone voted or not.
 ```
 HTTP Headers:
   <String> authorization - Authorization key
-  <String> user_id - User ID to check
+  <String> userid - User ID to check
   <Boolean> checkWeekend - (Optional) CHeck if vote multiplier on this user is enabled (weekend special)
 Return value:
   <Boolean> - `true` if user voted or vote multiplier is enabled, `false` if user did not vote.
@@ -53,7 +53,7 @@ To check how long the user will stay in database.
 ```
 HTTP Headers:
   <String> authorization - Authorization key
-  <String> user_id - User ID to check
+  <String> userid - User ID to check
 Return value:
   <Number|Boolean> - The duration of how long the user will be in cache (in ms), `false` if the user haven't voted.
 ```

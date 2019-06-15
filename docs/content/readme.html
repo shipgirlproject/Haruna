@@ -45,14 +45,14 @@
 <p>To check if someone voted or not.</p>
 <pre><code>HTTP Headers:
   &lt;String&gt; authorization - Authorization key
-  &lt;String&gt; user_id - User ID to check
+  &lt;String&gt; userid - User ID to check
   &lt;Boolean&gt; checkWeekend - (Optional) CHeck if vote multiplier on this user is enabled (weekend special)
 Return value:
   &lt;Boolean&gt; - `true` if user voted or vote multiplier is enabled, `false` if user did not vote.</code></pre><h3 id="get--getvotedtime"><code>GET</code> /getVotedTime</h3>
 <p>To check how long the user will stay in database.</p>
 <pre><code>HTTP Headers:
   &lt;String&gt; authorization - Authorization key
-  &lt;String&gt; user_id - User ID to check
+  &lt;String&gt; userid - User ID to check
 Return value:
   &lt;Number|Boolean&gt; - The duration of how long the user will be in cache (in ms), `false` if the user haven't voted.</code></pre><h2 id="some-documentation-">Some Documentation?</h2>
 <hr />
