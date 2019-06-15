@@ -16,14 +16,14 @@ class HarunaRequest {
 
     _request(endpoint, userID) {
         return fetch(this.baseurl + endpoint, {
-            headers: { 'authorization': this.auth, 'user_id': userID }
+            headers: { 'authorization': this.auth, 'userid': userID }
         }).then((res, error) => {
             if (error)
                 throw error
             if (!res.ok)
                 throw new Error('Haruna_API_ERROR: Response received is not ok.')
             if (res.status !== 200)
-                throw new Error(`Haruna_API_ERROR: ${body.status}: ${body.body}`)
+                throw new Error(`Haruna_API_ERROR: ${res.status}: ${res.body}`)
             return res.json()
         })
     }
