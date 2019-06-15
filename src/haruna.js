@@ -186,9 +186,9 @@ class Haruna {
                 this.log(`[Notice] Rejected hasVoted Request with IP ${req.ip}`)
                 return 'Unauthorized'
             }
-            const user = this.storage.get(req.headers.user_id)
-            this.log(`[Notice] Checked Vote for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).` : 'Not in Database.'}`)
-            if (!req.headers.user_id) return false
+            const user = this.storage.get(req.headers.userid)
+            this.log(`[Notice] Checked Vote for user_id ${req.headers.userid}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).` : 'Not in Database.'}`)
+            if (!req.headers.userid) return false
             return req.headers.checkWeekend ? (user && user.isWeekend) : !!user
         } catch (error) {
             console.error(error)
@@ -210,9 +210,9 @@ class Haruna {
                 this.log(`[Notice] Rejected getVotedTime Request with IP ${req.ip}`)
                 return 'Unauthorized'
             }
-            const user = this.storage.get(req.headers.user_id)
-            this.log(`[Notice] Checked Vote Time for user_id ${req.headers.user_id}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).` : 'Not in Database.'}`)
-            return (user && req.headers.user_id) ? user.time - Date.now() : false
+            const user = this.storage.get(req.headers.userid)
+            this.log(`[Notice] Checked Vote Time for user_id ${req.headers.userid}. Time Left: ${user ? `${((user.time - Date.now()) / 1000 / 60 / 60).toFixed(1)} hr(s).` : 'Not in Database.'}`)
+            return (user && req.headers.userid) ? user.time - Date.now() : false
         } catch (error) {
             console.error(error)
             res.code(500)
