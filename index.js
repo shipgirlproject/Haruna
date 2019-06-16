@@ -1,1 +1,1 @@
-module.exports = require('./src/haruna.js')
+module.exports = require('./src/Haruna.js')

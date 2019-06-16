@@ -8,4 +8,4 @@ if (existsSync('./config.json')) {
     config = require('./config.js')
 } else throw new Error('No config file found!')
 
-const server = new Haruna(config)
+new Haruna(config)

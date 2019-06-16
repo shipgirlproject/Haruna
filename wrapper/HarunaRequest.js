@@ -2,30 +2,32 @@ const fetch = require('node-fetch')
 
 class HarunaRequest {
     constructor(base, authentication) {
-        Object.defineProperty(this, 'auth', { value: authentication })
-        this.baseurl = base
+        Object.defineProperty(this, 'auth', { value: authentication });
+        this.base = base;
     }
 
     hasVoted(userID) {
-        return this._request('/hasVoted', userID)
+        return this._request('/hasVoted', userID);
     }
 
     getVotedTime(userID) {
-        return this._request('/getVotedTime', userID)
+        return this._request('/getVotedTime', userID);
     }
 
-    _request(endpoint, userID) {
-        return fetch(this.baseurl + endpoint, {
-            headers: { 'authorization': this.auth, 'user_id': userID }
-        }).then((res, error) => {
-            if (error)
-                throw error
-            if (!res.ok)
-                throw new Error('Haruna_API_ERROR: Response received is not ok.')
-            if (res.status !== 200)
-                throw new Error(`Haruna_API_ERROR: ${body.status}: ${body.body}`)
-            return res.json()
-        })
+    async _request(endpoint, userID) {
+        if (!userID)
+            throw new Error('UserID not specified.');
+
+        const url = new URL(this.base + endpoint);
+        url.search = new URLSearchParams({ id: userID });
+        const res = await fetch(url.toString(), {
+            headers: { 'authorization': this.auth }
+        });
+
+        if (res.status !== 200) 
+            throw new Error(`Haruna_API_Error. Status Code: ${res.status}`);
+
+        return res.json();
     }
 }
 

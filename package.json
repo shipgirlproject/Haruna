@@ -1,7 +1,7 @@
 {
   "name": "haruna",
   "version": "2.0.0",
-  "description": "A DBL Vote Webhook Handler",
+  "description": "A DBL Vote Webhook Server / API",
   "main": "index.js",
   "keywords": [
     "dbl",
@@ -11,10 +11,8 @@
   "author": "Deivu (Saya)",
   "license": "MIT",
   "dependencies": {
-    "better-sqlite-pool": "github:eslachance/better-sqlite-pool",
-    "enmap": "^4.8.7",
-    "fastify": "^2.4.1",
-    "bluebird": "^3.5.4",
+    "level": "^5.0.1",
+    "fastify": "^2.5.0",
     "node-fetch": "^2.6.0"
   },
   "engines": {
