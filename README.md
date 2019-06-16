@@ -22,7 +22,7 @@ This API / webhook handler is ~~oversimplified~~ simple to use. As long as you c
 > And above of all, Haruna is a waifu material.
 
 ### Now more easier to host
-> Now even comes with [`server.js`](https://github.com/deivu/haruna/blob/master/server.js), all you need to run to have your vote handler ready! (after you did configured your settings)
+> Now even comes with [`server.js`](https://github.com/deivu/haruna/blob/master/server.js), all you need to run to have your vote handler ready! (after you configured your settings)
 
 > Just copy the repo and put it on your server, then start server.js after you configured the config files, ain't that easy?
 
