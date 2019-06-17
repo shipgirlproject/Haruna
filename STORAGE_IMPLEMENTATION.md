@@ -6,7 +6,7 @@ You can find the base file for the Store in `src/base/HarunaStore.js`.  Create a
 * `async put(id, value)`
 * `async get(id)`
 * `_clean(callback)`
-> I do advise you to grab the latest file from the repo and put it in your repo/project/etc. It'll be much easier.
+> I advise you to grab the latest file from the repo and put it in your repo/project/etc. It'll be much easier.
 
 ### `get name()`
 This is a getter that defines the name of the store. This value should be changed.
