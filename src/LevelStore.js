@@ -1,18 +1,19 @@
 const fs = require('fs')
+const { join } = require('path')
 const level = require('level')
 
-class HarunaStore {
-    constructor(Haruna) {
-        console.log('[Notice] Initializing Haruna\'s Database')
-        Object.defineProperty(this, 'haruna', { value: Haruna })
-        Object.defineProperty(this, 'location', { value: process.cwd() })
-        if (!fs.existsSync(this.location + '/db')) fs.mkdirSync(this.location + '/db')
-        if (!fs.existsSync(this.location + '/db/haruna')) fs.mkdirSync(this.location + '/db/haruna')
-        Object.defineProperty(this, 'db', { value: level(this.location + '/db/haruna', { valueEncoding: 'json' }) })
-        console.log('[Notice] Haruna\'s Database Initialized')
+const HarunaStore = require('./base/HarunaStore.js')
+
+class LevelStore extends HarunaStore {
+    get name() { return 'Level Store' }
+
+    async init() {
+        if (!fs.existsSync(join(this.location, 'db'))) fs.mkdirSync(join(this.location, 'db'))
+        if (!fs.existsSync(join(this.location, 'db', 'haruna'))) fs.mkdirSync(join(this.location, 'db', 'haruna'))
+        Object.defineProperty(this, 'db', { value: level(join(this.location, 'db', 'haruna'), { valueEncoding: 'json' }) })
     }
 
-    put(id, value) {
+    async put(id, value) {
         return this.db.put(id, value)
     }
 
@@ -53,19 +54,5 @@ class HarunaStore {
                 }
             })
     }
-
-    _errored(error) {
-        console.error(error)
-        this.haruna.execWebhook({
-            embeds: [{
-                color: 0x9B767B,
-                description: `⚠ Error in executing the Batch Clean ${error.toString()}`,
-                timestamp: new Date(),
-                footer: {
-                    text: 'Haruna Store'
-                }
-            }]
-        }).catch(console.error)
-    }
 }
-module.exports = HarunaStore
+module.exports = LevelStore

@@ -93,4 +93,5 @@ data/
 # etc etc
 .idea
 package-lock.json
+config.js*
 db

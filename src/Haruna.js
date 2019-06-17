@@ -1,7 +1,7 @@
 const fastify = require('fastify')
 const fetch = require('node-fetch')
 
-const HarunaStore = require('./HarunaStore.js')
+const HarunaStore = require('./LevelStore.js')
 const Constant = require('./HarunaConstant.js')
 const { version } = require('../package.json')
 
@@ -15,14 +15,15 @@ class Haruna {
      * @param {string} options.token DBL token
      * @param {boolean} [options.logging=true] Whether to log optional logs
      * @param {string} [options.dir=''] The directory of the database
-     * @param {webhook} options.webhook The webhook **link**
+     * @param {string} options.webhook The webhook **link**
+     * @param {HarunaStore} options.store Custom store implementation that you want to use. Defaults to `level` backed store.
      */
     constructor(options) {
         /**
          * Options that is used to initialize Haruna with
          * @type {Object}
          */
-        this.options = { ...Constant, ...options }
+        this.options = { ...Constant, ...{ store: HarunaStore }, ...options }
 
         if (!this.options.auth || !this.options.token)
             throw new Error('Authentication key or DBL token not specified')
@@ -30,7 +31,7 @@ class Haruna {
          * Haruna Store
          * @type {HarunaStore}  
          */
-        this.store = new HarunaStore(this)
+        this.store = new this.options.store(this)
         /**
          * An Fastify instance
          * @type {external:Fastify}
@@ -52,7 +53,7 @@ class Haruna {
     }
 
     get ram() {
-        return this.rss < 1024000000 ? `${Math.round(this.rss / 1024 / 1024)} MB` : `${(this.rss / 1024 / 1024 / 1024).toFixed(1)} GB`
+        return formatBytes(this.rss, 1)
     }
     /**
      * Function for logging misc events.
@@ -238,6 +239,19 @@ class Haruna {
   <img src="https://vignette.wikia.nocookie.net/kancolle/images/6/61/Haruna_Shopping_Full.png/revision/latest/" height="549" width="200">
 </p>`
     }
+}
+
+// https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
 module.exports = Haruna
