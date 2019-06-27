@@ -17,7 +17,7 @@ public class VoteInfo {
         HttpServerResponse response = context.response();
         try {
             String auth = request.getHeader("authorization");
-            if (!auth.equals("to_be_implemented")) {
+            if (auth == null || !auth.equals(haruna.config.RestAuth)) {
                 response.setStatusCode(401).setStatusMessage("Unauthorized").end();
                 return;
             }
@@ -47,7 +47,7 @@ public class VoteInfo {
 
             response.end(json.toString());
         } catch (Exception error) {
-            haruna.formatTrace(error.getStackTrace());
+            haruna.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();
         }
     }

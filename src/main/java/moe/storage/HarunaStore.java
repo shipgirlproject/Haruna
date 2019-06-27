@@ -5,6 +5,7 @@ import moe.structure.HarunaUser;
 import org.h2.jdbcx.JdbcConnectionPool;
 
 import java.sql.*;
+import java.time.Instant;
 
 public class HarunaStore {
     private final JdbcConnectionPool pool;
@@ -13,7 +14,7 @@ public class HarunaStore {
     public HarunaStore(Haruna haruna, String location) {
         haruna.HarunaLog.info("Connecting to the database....");
         pool = JdbcConnectionPool.create(
-                "jdbc:h2:" + location + "/db/HarunaStore",
+                "jdbc:h2:file:./db/HarunaStore;MULTI_THREADED=1",
                 "",
                 ""
         );
@@ -28,11 +29,12 @@ public class HarunaStore {
                 ).execute();
             }
         } catch (Exception error) {
-            haruna.formatTrace(error.getStackTrace());
+            error.printStackTrace();
+            haruna.formatTrace(error.getMessage(), error.getStackTrace());
             System.exit(0);
         }
         this.haruna = haruna;
-        haruna.HarunaLog.info("Connected to the database @ " + location + "/db/HarunaStore");
+        haruna.HarunaLog.info("Connected to the database @ " + location + "db\\HarunaStore");
     }
 
     public void save(String user, long timestamp, String weekend) throws Exception {
@@ -68,11 +70,11 @@ public class HarunaStore {
         return data;
     }
 
-    public int clean(long timestamp) throws Exception {
-        int cleaned = 0;
+    public int clean() throws Exception {
+        int cleaned;
         try (Connection connection = pool.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM HarunaStore WHERE timestamp <= ?");
-            statement.setLong(0, timestamp);
+            statement.setLong(0, Instant.now().toEpochMilli());
             cleaned = statement.executeUpdate();
         }
         haruna.HarunaLog.info("Cleaned " + cleaned + " saved entries in the database.");

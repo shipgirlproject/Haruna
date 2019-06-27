@@ -19,7 +19,7 @@ public class NewVote {
 
         try {
             String auth = request.getHeader("Authorization");
-            if (!auth.equals("to_be_implemented")) {
+            if (auth == null || !auth.equals(haruna.config.RestAuth)) {
                 response.setStatusCode(401).setStatusMessage("Unauthorized").end();
                 return;
             }
@@ -33,13 +33,13 @@ public class NewVote {
                 return;
             }
 
-            long store = Instant.now().plusSeconds(900 /*reimplement soon*/).toEpochMilli();
+            long store = Instant.now().plusMillis(haruna.config.UserTimeout).toEpochMilli();
             haruna.store.save(user, store, isWeekend.toString());
 
             response.setStatusCode(200).setStatusMessage("ok").end();
 
         } catch (Exception error) {
-            haruna.formatTrace(error.getStackTrace());
+            haruna.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();
         }
     }
