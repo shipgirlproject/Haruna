@@ -14,7 +14,7 @@ public class HarunaStore {
     public HarunaStore(Haruna haruna, String location) {
         haruna.HarunaLog.info("Connecting to the database....");
         pool = JdbcConnectionPool.create(
-                "jdbc:h2:file:./db/HarunaStore;MULTI_THREADED=1",
+                "jdbc:h2:file:" + location + "db\\HarunaStore;MULTI_THREADED=1",
                 "",
                 ""
         );

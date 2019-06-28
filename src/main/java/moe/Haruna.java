@@ -21,11 +21,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Haruna {
-
-    public final Logger HarunaLog = LoggerFactory.getLogger(Sortie.class);
-    public final HarunaStore store = new HarunaStore(this, this.getLocation());
     public final HarunaConfig config = new HarunaConfig(this, this.getLocation());
+    public final Logger HarunaLog = LoggerFactory.getLogger(Sortie.class);
     public final Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(config.Threads));
+    public final HarunaStore store = new HarunaStore(this, this.getLocation());
     public final HarunaRest rest = new HarunaRest(this, config);
 
     private final HttpServer server;
