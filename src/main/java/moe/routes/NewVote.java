@@ -34,10 +34,10 @@ public class NewVote {
             }
 
             long store = Instant.now().plusMillis(haruna.config.UserTimeout).toEpochMilli();
-            haruna.store.save(user, store, isWeekend.toString());
+
+            haruna.store.save(user, store, isWeekend);
 
             response.setStatusCode(200).setStatusMessage("ok").end();
-
         } catch (Exception error) {
             haruna.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();
