@@ -6,6 +6,7 @@ import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import moe.misc.HarunaConfig;
+import moe.misc.HarunaRest;
 import moe.routes.NewVote;
 import moe.routes.VoteInfo;
 import moe.storage.HarunaStore;
@@ -20,15 +21,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Haruna {
+
     public final Logger HarunaLog = LoggerFactory.getLogger(Sortie.class);
     public final HarunaStore store = new HarunaStore(this, this.getLocation());
     public final HarunaConfig config = new HarunaConfig(this, this.getLocation());
+    public final Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(config.Threads));
+    public final HarunaRest rest = new HarunaRest(this, config);
 
     private final HttpServer server;
     private final Router routes;
 
     Haruna() {
-        Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(config.Threads));
         server = vertx.createHttpServer();
         routes = Router.router(vertx);
     }
