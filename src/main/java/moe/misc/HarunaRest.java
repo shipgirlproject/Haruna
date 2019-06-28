@@ -1,5 +1,6 @@
 package moe.misc;
 
+import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
@@ -22,13 +23,13 @@ public class HarunaRest {
         this.DBLAuth = config.DBLAuth;
 
         WebClientOptions options = new WebClientOptions()
-                .setUserAgent("Haruna/3.0.0");
+                .setUserAgent("Haruna/" + haruna.config.getHarunaVersion());
         this.client = WebClient.create(haruna.vertx, options);
     }
 
     public CompletableFuture<String> getUser(String id) {
         CompletableFuture<String> result = new CompletableFuture<>();
-        client.get("https://discordbots.org", "/api/users/" + id)
+        client.requestAbs(HttpMethod.GET, "https://discordbots.org/api/users/" + id)
                 .putHeader("authorization", DBLAuth)
                 .send(res -> {
                     if (res.succeeded()) {
@@ -45,14 +46,13 @@ public class HarunaRest {
     }
 
     private void sendEmbed(JsonArray array) {
-        client.post(weebhook)
+        client.requestAbs(HttpMethod.POST, weebhook)
                 .putHeader("Content-Type", "application/json")
                 .sendJsonObject(
                         new JsonObject().put("embeds", array),
                         res -> {
                             if (res.failed()) haruna.formatTrace(res.cause().getMessage(), res.cause().getStackTrace());
-                        }
-                );
+                        });
     }
 
     public void sendEmbed(Color color, String desc, String footerdesc) {

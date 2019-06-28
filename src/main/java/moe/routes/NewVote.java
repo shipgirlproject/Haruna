@@ -6,6 +6,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import moe.Haruna;
 
+import java.awt.*;
 import java.time.Instant;
 
 public class NewVote {
@@ -37,10 +38,28 @@ public class NewVote {
 
             haruna.store.save(user, store, isWeekend);
 
+            sendVote(user);
+
             response.setStatusCode(200).setStatusMessage("ok").end();
         } catch (Exception error) {
             haruna.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();
         }
+    }
+
+    private void sendVote(String user) {
+        haruna.rest.getUser(user)
+                .thenAcceptAsync(tag -> {
+                    if (tag == null) return;
+                    haruna.rest.sendEmbed(
+                            Color.CYAN,
+                            "\\📥 New vote stored **" + tag + "** `(" + user + ")`",
+                            "➕ || New Vote Stored"
+                    );
+                })
+                .exceptionally(error -> {
+                    haruna.formatTrace(error.getMessage(), error.getStackTrace());
+                    return null;
+                });
     }
 }

@@ -56,14 +56,15 @@ public class HarunaStore {
     public HarunaUser get(String user) throws Exception {
         HarunaUser data = null;
         try (Connection connection = pool.getConnection()) {
-            try (ResultSet results = connection.prepareStatement(
-                    "SELECT DISTINCT * FROM HarunaStore WHERE user = ?"
-            ).executeQuery()) {
-                while (results.next()) {
-                    data = new HarunaUser();
-                    data.user = results.getString("user");
-                    data.timestamp = results.getLong("timestamp");
-                    data.weekend = results.getBoolean("weekend");
+            try (PreparedStatement cmd = connection.prepareStatement("SELECT DISTINCT * FROM HarunaStore WHERE user = ?")) {
+                cmd.setString(1, user);
+                try (ResultSet results = cmd.executeQuery()) {
+                    while (results.next()) {
+                        data = new HarunaUser();
+                        data.user = results.getString("user");
+                        data.timestamp = results.getLong("timestamp");
+                        data.weekend = results.getBoolean("weekend");
+                    }
                 }
             }
         }

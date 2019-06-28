@@ -3,16 +3,23 @@ package moe.misc;
 import moe.Haruna;
 import org.json.JSONTokener;
 import org.json.JSONObject;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class HarunaConfig {
+    String DBLAuth = null;
+    String Weebhook = null;
     public String RestAuth = null;
-    public String DBLAuth = null;
-    public String Weebhook = null;
     public int Port = 1024;
     public int Threads = 20;
     public long UserTimeout = 43200000;
+
+    private final String HarunaVersion = getClass().getPackage().getImplementationVersion();
+
+    public String getHarunaVersion() {
+        return HarunaVersion == null ? "Unofficial" : HarunaVersion;
+    }
 
     public HarunaConfig(Haruna haruna, String location) {
         try (InputStream input = new FileInputStream(location + "HarunaConfig.json")) {

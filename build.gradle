@@ -2,9 +2,11 @@ plugins {
     id 'java'
 }
 
-version '1.0-SNAPSHOT'
+version '3.0-BETA'
 
 sourceCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -19,4 +21,22 @@ dependencies {
     compile("org.slf4j:slf4j-api:1.7.26")
     compile("org.slf4j:slf4j-log4j12:1.7.26")
     compile("org.json:json:20180813")
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'moe.Sortie',
+                'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+                'Implementation-Title': 'Haruna',
+                'Implementation-Version': version
+        )
+    }
+    archiveName 'haruna.jar'
+    from {
+        configurations
+                .compile
+                .findAll { !it.name.endsWith('pom') }
+                .collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
