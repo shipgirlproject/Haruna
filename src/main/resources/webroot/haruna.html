@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Haruna</title>
-    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
 </head>
+
 <style>
     body {
         background-color: #708090;
@@ -39,68 +40,108 @@
         line-height: 20px;
     }
 
-    div.table {
-        font-family: "Trebuchet MS", Helvetica, sans-serif;
-        border: 1px solid #D1D1D1;
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
         width: 100%;
+        table-layout: fixed;
+    }
+
+    table caption {
+        font-size: 1.5em;
+        margin: .5em 0 .75em;
+    }
+
+    table tr {
+        background-color: #f8f8f8;
+        color: #202124;
+        border: 1px solid #ddd;
+        padding: .35em;
+    }
+
+    table th,
+    table td {
+        padding: .625em;
+        color: #202124;
         text-align: center;
     }
 
-    .divTable.table .divTableCell,
-    .divTable.table .divTableHead {
-        border: 1px solid #D1D1D1;
-        padding: 3px 2px;
+    table th {
+        font-size: .85em;
+        letter-spacing: .1em;
+        text-transform: uppercase;
     }
 
-    .divTable.table .divTableBody .divTableCell {
-        font-size: 13px;
-    }
+    @media screen and (max-width: 600px) {
+        table {
+            border: 0;
+        }
 
-    .divTable.table .divTableHeading {}
+        table caption {
+            font-size: 1.3em;
+        }
 
-    .divTable.table .divTableHeading .divTableHead {
-        font-size: 19px;
-        font-weight: bold;
-        color: #E3E3E3;
-        text-align: center;
-    }
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
 
-    .table .tableFootStyle {
-        font-size: 13px;
-    }
+        table tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: .625em;
+        }
 
-    /* DivTable.com */
-    .divTable {
-        display: table;
-    }
+        table td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: .8em;
+            text-align: right;
+        }
 
-    .divTableRow {
-        display: table-row;
-    }
+        table td::before {
+            /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
 
-    .divTableHeading {
-        display: table-header-group;
-    }
-
-    .divTableCell,
-    .divTableHead {
-        display: table-cell;
-    }
-
-    .divTableHeading {
-        display: table-header-group;
-    }
-
-    .divTableFoot {
-        display: table-footer-group;
-    }
-
-    .divTableBody {
-        display: table-row-group;
+        table td:last-child {
+            border-bottom: 0;
+        }
     }
 </style>
 
-<body onLoad="start()">
+<script>
+    window.onload = async () => {
+        try {
+            const res = await fetch("/stats");
+            const data = await res.json();
+            console.log("Current Stats", data);
+            document.getElementById("ver").innerHTML = data.haruna_version;
+            document.getElementById("used").innerHTML = data.used_memory;
+            document.getElementById("free").innerHTML = data.allocated_free;
+            document.getElementById("reserved").innerHTML = data.allocated_reserved;
+            document.getElementById("max").innerHTML = data.maximum_allocatable;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>
+
+<body>
     <center>
         <h1> Haruna </h1>
         <h3>Version: <span id="ver">Loading..</span></h3>
@@ -112,26 +153,24 @@
         <img src="https://vignette.wikia.nocookie.net/kancolle/images/6/61/Haruna_Shopping_Full.png/revision/latest/"
             height="500" width="182">
         <h3>Program Statistics</h3>
-        <div class="divTable table">
-            <div class="divTableHeading">
-                <div class="divTableRow">
-                    <div class="divTableHead">CPU Usage</div>
-                    <div class="divTableHead">Used Memory</div>
-                    <div class="divTableHead">Allocated Free</div>
-                    <div class="divTableHead">Allocated Reserved</div>
-                    <div class="divTableHead">Maximum Allocatable</div>
-                </div>
-            </div>
-            <div class="divTableBody">
-                <div class="divTableRow">
-                    <div class="divTableCell" id="cpu">...</div>
-                    <div class="divTableCell" id="used">...</div>
-                    <div class="divTableCell" id="free">...</div>
-                    <div class="divTableCell" id="reserved">...</div>
-                    <div class="divTableCell" id="max">...</div>
-                </div>
-            </div>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Used Memory</th>
+                    <th>Allocated Free</th>
+                    <th>Allocated Reserved</th>
+                    <th>Maximum Allocatable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="used">...</td>
+                    <td id="free">...</td>
+                    <td id="reserved">...</td>
+                    <td id="max">...</td>
+                </tr>
+            </tbody>
+        </table>
         <p>Program Developed by: <b><a href="https://github.com/Deivu">Saya</a></b></p>
         <p>The Shipgirl Project</p>
         <p>(c) Kancolle for Haruna</p>
@@ -139,21 +178,3 @@
 </body>
 
 </html>
-
-<script>
-    async function start() {
-        try {
-            const res = await fetch("/stats");
-            const data = await res.json();
-            console.log("Current Stats", data);
-            document.getElementById("ver").innerHTML = data.haruna_version;
-            document.getElementById("cpu").innerHTML = data.cpu_usage;
-            document.getElementById("used").innerHTML = data.used_memory;
-            document.getElementById("free").innerHTML = data.allocated_free;
-            document.getElementById("reserved").innerHTML = data.allocated_reserved;
-            document.getElementById("max").innerHTML = data.maximum_allocatable;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-</script>
