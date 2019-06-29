@@ -40,12 +40,11 @@ public class Haruna {
         harunaLog.info("Setting the API routes....");
         routes.route().handler(BodyHandler.create());
         routes.route(HttpMethod.POST, "/newVote/")
-                .consumes("application/json")
                 .blockingHandler(newVote::execute, true)
                 .enable();
         routes.route(HttpMethod.GET, "/voteInfo/")
                 .produces("application/json")
-                .blockingHandler(voteInfo::execute)
+                .blockingHandler(voteInfo::execute, false)
                 .enable();
         routes.route(HttpMethod.GET, "/stats/")
                 .produces("application/json")

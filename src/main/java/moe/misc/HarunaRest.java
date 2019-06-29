@@ -35,8 +35,12 @@ public class HarunaRest {
                 .send(res -> {
                     if (res.succeeded()) {
                         JsonObject body = res.result().bodyAsJsonObject();
+                        String username = body.getString("username");
+                        if (username == null) username = "???";
+                        String discrim = body.getString("discriminator");
+                        if (discrim == null) discrim = "???";
                         result.complete(
-                                body.getString("username") + "#" + body.getString("discriminator")
+                                username + "#" + discrim
                         );
                     } else {
                         result.complete(null);
