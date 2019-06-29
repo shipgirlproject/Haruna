@@ -27,7 +27,7 @@ public class NewVote {
 
             System.out.println(context.getBodyAsString());
 
-            JsonObject json = context.getBodyAsString()
+            JsonObject json = context.getBodyAsJson();
 
             if (json.isEmpty()) {
                 response.setStatusCode(400).setStatusMessage("JSON is empty").end();
