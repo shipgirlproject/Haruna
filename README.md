@@ -5,6 +5,8 @@
 
 The ShipGirl Project. Haruna, the helping hand of Kashima. `(c) Kancolle for Haruna.`
 
+> This is the older, JavaScript and Node.js based Haruna. The newer ones uses Java and all the development will be continued there. There is no guarantee if this branch will be maintained.
+
 Simple webhook vote handler for [Discord Bot List](https://discordbots.org/) to help with [Kashima](https://discordbots.org/bot/424137718961012737)
 
 This API / webhook handler is ~~oversimplified~~ simple to use. As long as you can start it, it will handle everything for you to save you the hassle of creating your own vote handler.
