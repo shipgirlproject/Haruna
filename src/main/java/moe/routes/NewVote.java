@@ -25,8 +25,6 @@ public class NewVote {
                 return;
             }
 
-            System.out.println(context.data().toString());
-
             JsonObject json = context.getBodyAsJson();
 
             if (json.isEmpty()) {

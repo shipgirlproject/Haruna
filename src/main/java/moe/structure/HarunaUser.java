@@ -7,7 +7,7 @@ public class HarunaUser {
     public long timestamp = 0;
     public Boolean weekend = null;
 
-    public int getRemaining() {
-        return Instant.ofEpochMilli(timestamp).compareTo(Instant.now());
+    public long getRemaining() {
+        return timestamp - Instant.now().toEpochMilli();
     }
 }
