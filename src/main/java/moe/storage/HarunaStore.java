@@ -9,7 +9,6 @@ import java.time.Instant;
 
 public class HarunaStore {
     private final JdbcConnectionPool pool;
-    private final Haruna haruna;
 
     public HarunaStore(Haruna haruna, String location) {
         haruna.harunaLog.info("Connecting to the database....");
@@ -33,7 +32,6 @@ public class HarunaStore {
             haruna.formatTrace(error.getMessage(), error.getStackTrace());
             System.exit(0);
         }
-        this.haruna = haruna;
         haruna.harunaLog.info("Connected to the database @ " + location + "db\\HarunaStore");
     }
 
