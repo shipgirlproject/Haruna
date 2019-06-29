@@ -5,5 +5,5 @@
     "Debug": false,
     "Port": 1024,
     "Threads": 10,
-    "UserTimeout": 10000000000000000
+    "UserTimeout": 46800000
 }
