@@ -39,10 +39,6 @@ public class Haruna {
     void routes(NewVote newVote, VoteInfo voteInfo) {
         harunaLog.info("Setting the API routes....");
         routes.route().handler(BodyHandler.create());
-        routes.route().handler(
-                StaticHandler.create()
-                        .setIndexPage("/haruna.html")
-        );
         routes.route(HttpMethod.POST, "/newVote/")
                 .consumes("application/json")
                 .blockingHandler(newVote::execute, true)
@@ -55,6 +51,10 @@ public class Haruna {
                 .produces("application/json")
                 .handler(stats::execute)
                 .enable();
+        routes.route().handler(
+                StaticHandler.create()
+                        .setIndexPage("/haruna.html")
+        );
         harunaLog.info("API routes configured!");
     }
 
