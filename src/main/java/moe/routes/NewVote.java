@@ -25,14 +25,16 @@ public class NewVote {
                 return;
             }
 
-            JsonObject json = context.getBody().toJsonObject();
+            System.out.println(context.getBodyAsString());
+
+            JsonObject json = context.getBodyAsString()
 
             if (json.isEmpty()) {
                 response.setStatusCode(400).setStatusMessage("JSON is empty").end();
                 haruna.harunaLog.debug("A POST request in /newVote from " + request.remoteAddress() + " don't contain a json body.");
                 return;
             }
-            
+
             String user = json.getString("user");
             Boolean isWeekend = json.getBoolean("isWeekend");
 
