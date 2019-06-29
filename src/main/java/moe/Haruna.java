@@ -5,6 +5,7 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import moe.misc.*;
 import moe.routes.NewVote;
@@ -37,7 +38,13 @@ public class Haruna {
 
     void routes(NewVote newVote, VoteInfo voteInfo) {
         harunaLog.info("Setting the API routes....");
+        routes.route().handler(BodyHandler.create());
+        routes.route().handler(
+                StaticHandler.create()
+                        .setIndexPage("/haruna.html")
+        );
         routes.route(HttpMethod.POST, "/newVote/")
+                .consumes("application/json")
                 .blockingHandler(newVote::execute, true)
                 .enable();
         routes.route(HttpMethod.GET, "/voteInfo/")
@@ -48,10 +55,6 @@ public class Haruna {
                 .produces("application/json")
                 .handler(stats::execute)
                 .enable();
-        routes.route().handler(
-                StaticHandler.create()
-                        .setIndexPage("/haruna.html")
-        );
         harunaLog.info("API routes configured!");
     }
 
