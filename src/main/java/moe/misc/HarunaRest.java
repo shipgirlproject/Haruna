@@ -9,7 +9,6 @@ import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
 import moe.Haruna;
 
-import java.awt.*;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 

@@ -19,6 +19,7 @@ public class VoteInfo {
             String auth = request.getHeader("authorization");
             if (auth == null || !auth.equals(haruna.config.RestAuth)) {
                 response.setStatusCode(401).setStatusMessage("Unauthorized").end();
+                haruna.harunaLog.debug("Rejected GET request in /voteInfo from " + request.remoteAddress());
                 return;
             }
 
@@ -28,6 +29,7 @@ public class VoteInfo {
                 JsonObject json = new JsonObject();
                 json.put("user", false);
                 response.end(json.toString());
+                haruna.harunaLog.debug("Served GET request in /voteInfo without a query string from " + request.remoteAddress());
                 return;
             }
 
@@ -36,6 +38,7 @@ public class VoteInfo {
                 JsonObject json = new JsonObject();
                 json.put("user", false);
                 response.end(json.toString());
+                haruna.harunaLog.debug("Served GET request in /voteInfo with a query string but not in the database from " + request.remoteAddress());
                 return;
             }
 
@@ -46,6 +49,7 @@ public class VoteInfo {
             json.put("timeLeft", harunaUser.getRemaining());
 
             response.end(json.toString());
+            haruna.harunaLog.debug("Served GET request in /voteInfo from " + request.remoteAddress());
         } catch (Exception error) {
             haruna.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();

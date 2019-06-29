@@ -2,8 +2,6 @@ package moe.misc;
 
 import moe.Haruna;
 
-import java.awt.*;
-
 public class HarunaCron {
     private final Haruna haruna;
 
@@ -13,6 +11,7 @@ public class HarunaCron {
         try {
             int cleaned = haruna.store.clean();
             sendEmbed(cleaned, false);
+            haruna.harunaLog.debug("Cleaner Executed. Cleaned " + cleaned + " users from DB.");
         } catch (Exception error) {
             haruna.formatTrace(error.getMessage(), error.getStackTrace());
             sendEmbed(0, true);

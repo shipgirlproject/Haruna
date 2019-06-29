@@ -6,7 +6,6 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import moe.Haruna;
 
-import java.awt.*;
 import java.time.Instant;
 
 public class NewVote {
@@ -22,6 +21,7 @@ public class NewVote {
             String auth = request.getHeader("Authorization");
             if (auth == null || !auth.equals(haruna.config.RestAuth)) {
                 response.setStatusCode(401).setStatusMessage("Unauthorized").end();
+                haruna.harunaLog.debug("Rejected POST request in /newVote from " + request.remoteAddress());
                 return;
             }
 
@@ -31,6 +31,7 @@ public class NewVote {
 
             if (user == null || isWeekend == null) {
                 response.setStatusCode(400).setStatusMessage("User or IsWeekend is equal to null").end();
+                haruna.harunaLog.debug("A POST request in /newVote from " + request.remoteAddress() + " don't contain a user or isWeekend property.");
                 return;
             }
 
@@ -38,9 +39,11 @@ public class NewVote {
 
             haruna.store.save(user, store, isWeekend);
 
+            response.setStatusCode(200).setStatusMessage("ok").end();
+
             sendVote(user);
 
-            response.setStatusCode(200).setStatusMessage("ok").end();
+            haruna.harunaLog.debug("A POST request in /newVote from " + request.remoteAddress() + " is saved. UserID: " + user);
         } catch (Exception error) {
             haruna.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();

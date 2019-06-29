@@ -6,17 +6,11 @@ import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.StaticHandler;
-import moe.misc.HarunaConfig;
-import moe.misc.HarunaCron;
-import moe.misc.HarunaRest;
-import moe.misc.HarunaStats;
+import moe.misc.*;
 import moe.routes.NewVote;
 import moe.routes.VoteInfo;
 import moe.storage.HarunaStore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Haruna {
-    public final Logger HarunaLog = LoggerFactory.getLogger(Sortie.class);
+    public final HarunaLog harunaLog = new HarunaLog(this);
     public final HarunaConfig config = new HarunaConfig(this, this.getLocation());
     public final Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(config.Threads));
     public final HarunaStore store = new HarunaStore(this, this.getLocation());
@@ -42,6 +36,7 @@ public class Haruna {
     }
 
     void routes(NewVote newVote, VoteInfo voteInfo) {
+        harunaLog.info("Setting the API routes....");
         routes.route(HttpMethod.POST, "/newVote/")
                 .consumes("application/json")
                 .blockingHandler(newVote::execute, true)
@@ -58,9 +53,11 @@ public class Haruna {
                 StaticHandler.create()
                         .setIndexPage("/haruna.html")
         );
+        harunaLog.info("API routes configured!");
     }
 
     void listen() {
+        harunaLog.info("Initializing the Cron Jobs....");
         HarunaCron harunaCron = new HarunaCron(this);
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(
                 harunaCron::execute, 30, 360, TimeUnit.SECONDS
@@ -68,7 +65,10 @@ public class Haruna {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(
                 stats::updateJsonObject, 0, 240, TimeUnit.SECONDS
         );
+        harunaLog.info("Cron Jobs are now armed!");
+        harunaLog.info("Setting the configured routes and trying to listen @ Port " + config.Port);
         server.requestHandler(routes).listen(config.Port);
+        harunaLog.info("Success. Haruna is now online, configured to listen @ Port " + config.Port);
         sendEmbed();
     }
 
@@ -77,7 +77,7 @@ public class Haruna {
                 .map(v -> v.toString() + "\n")
                 .collect(Collectors.toList());
         trace.add(0, message + "\n");
-        HarunaLog.error(trace.toString());
+        harunaLog.error(trace.toString());
     }
 
     private String getLocation() {

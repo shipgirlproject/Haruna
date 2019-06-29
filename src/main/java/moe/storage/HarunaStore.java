@@ -12,7 +12,7 @@ public class HarunaStore {
     private final Haruna haruna;
 
     public HarunaStore(Haruna haruna, String location) {
-        haruna.HarunaLog.info("Connecting to the database....");
+        haruna.harunaLog.info("Connecting to the database....");
         pool = JdbcConnectionPool.create(
                 "jdbc:h2:file:" + location + "db\\HarunaStore;MODE=MYSQL;MULTI_THREADED=1",
                 "",
@@ -34,7 +34,7 @@ public class HarunaStore {
             System.exit(0);
         }
         this.haruna = haruna;
-        haruna.HarunaLog.info("Connected to the database @ " + location + "db\\HarunaStore");
+        haruna.harunaLog.info("Connected to the database @ " + location + "db\\HarunaStore");
     }
 
     public void save(String user, long timestamp, boolean weekend) throws Exception {
@@ -78,7 +78,6 @@ public class HarunaStore {
             statement.setLong(1, Instant.now().toEpochMilli());
             cleaned = statement.executeUpdate();
         }
-        haruna.HarunaLog.info("Cleaned " + cleaned + " saved entries in the database.");
         return cleaned;
     }
 }

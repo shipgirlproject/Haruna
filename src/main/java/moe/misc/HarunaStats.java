@@ -18,8 +18,11 @@ public class HarunaStats {
     public HarunaStats(Haruna haruna) { this.haruna = haruna; }
 
     public void execute(RoutingContext context) {
-        context.response()
-                .end(stats.toString());
+        try {
+            context.response().end(stats.toString());
+        } catch (Exception error) {
+            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+        }
     }
 
     public void updateJsonObject() {
@@ -32,6 +35,7 @@ public class HarunaStats {
                 .put("allocated_free", convertRam(freeMemory))
                 .put("allocated_reserved", convertRam(totalMemory))
                 .put("maximum_allocatable", convertRam((double) runtime.maxMemory()));
+        haruna.harunaLog.debug("Cached JsonStats Object updated.");
     }
 
     private String convertRam(Double ram) {

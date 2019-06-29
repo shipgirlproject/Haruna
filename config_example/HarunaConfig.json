@@ -2,6 +2,7 @@
     "RestAuth": "owo",
     "DBLAuth": "uwu",
     "Weebhook": "weeb",
+    "Debug": false,
     "Port": 1024,
     "Threads": 10,
     "UserTimeout": 10000000000000000
