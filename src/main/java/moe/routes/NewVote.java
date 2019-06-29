@@ -52,7 +52,7 @@ public class NewVote {
                 .thenAcceptAsync(tag -> {
                     if (tag == null) return;
                     haruna.rest.sendEmbed(
-                            Color.CYAN,
+                            0x326600,
                             "\\📥 New vote stored **" + tag + "** `(" + user + ")`",
                             "➕ || New Vote Stored"
                     );

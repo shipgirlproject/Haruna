@@ -1,8 +1,10 @@
 package moe.misc;
 
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
 import moe.Haruna;
@@ -51,15 +53,26 @@ public class HarunaRest {
                 .sendJsonObject(
                         new JsonObject().put("embeds", array),
                         res -> {
-                            if (res.failed()) haruna.formatTrace(res.cause().getMessage(), res.cause().getStackTrace());
+                            if (res.failed()) {
+                                haruna.formatTrace(res.cause().getMessage(), res.cause().getStackTrace());
+                                return;
+                            }
+                            HttpResponse<Buffer> buffer = res.result();
+                            int statusCode = buffer.statusCode();
+                            if (statusCode == 200 || statusCode == 204) return;
+                            Exception error = new Exception(
+                                    buffer.statusCode() + ": "+ buffer.statusMessage()
+                            );
+                            haruna.formatTrace(error.getMessage(), error.getStackTrace());
                         });
     }
 
-    public void sendEmbed(Color color, String desc, String footerdesc) {
+    public void sendEmbed(int color, String desc, String footerdesc) {
+        if (weebhook == null) return;
         JsonObject footer = new JsonObject()
                 .put("text", footerdesc);
         JsonObject embed = new JsonObject()
-                .put("color", Integer.toHexString(color.getRGB()))
+                .put("color", color)
                 .put("description", desc)
                 .put("timestamp", Instant.now())
                 .put("footer", footer);

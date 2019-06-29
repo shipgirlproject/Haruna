@@ -5,9 +5,11 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.StaticHandler;
 import moe.misc.HarunaConfig;
 import moe.misc.HarunaCron;
 import moe.misc.HarunaRest;
+import moe.misc.HarunaStats;
 import moe.routes.NewVote;
 import moe.routes.VoteInfo;
 import moe.storage.HarunaStore;
@@ -29,6 +31,8 @@ public class Haruna {
     public final HarunaStore store = new HarunaStore(this, this.getLocation());
     public final HarunaRest rest = new HarunaRest(this, config);
 
+    private final HarunaStats stats = new HarunaStats(this);
+
     private final HttpServer server;
     private final Router routes;
 
@@ -46,12 +50,23 @@ public class Haruna {
                 .produces("application/json")
                 .blockingHandler(voteInfo::execute)
                 .enable();
+        routes.route(HttpMethod.GET, "/stats/")
+                .produces("application/json")
+                .handler(stats::execute)
+                .enable();
+        routes.route().handler(
+                StaticHandler.create()
+                        .setIndexPage("/haruna.html")
+        );
     }
 
     void listen() {
         HarunaCron harunaCron = new HarunaCron(this);
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(
-                harunaCron::execute, 60, 60, TimeUnit.SECONDS
+                harunaCron::execute, 30, 360, TimeUnit.SECONDS
+        );
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(
+                stats::updateJsonObject, 0, 240, TimeUnit.SECONDS
         );
         server.requestHandler(routes).listen(config.Port);
         sendEmbed();
@@ -78,9 +93,9 @@ public class Haruna {
 
     private void sendEmbed() {
         rest.sendEmbed(
-                Color.GREEN,
-                "\\☑ Haruna is now online",
-                "ℹ || Version: " + config.getHarunaVersion()
+                0x2f6276,
+                "\\✅ **Haruna is now online**",
+                "\uD83D\uDCE1 || Haruna's version: " + config.getHarunaVersion()
         );
     }
 }

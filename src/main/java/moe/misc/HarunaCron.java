@@ -22,16 +22,16 @@ public class HarunaCron {
     private void sendEmbed(int amount, Boolean errored) {
         if (errored) {
             haruna.rest.sendEmbed(
-                    Color.PINK,
+                    0xdd666c,
                     "\\⚠ **Prune failed**. Check logs for more info.",
-                    "⏲ || Haruna Cron Job"
+                    "⏲ || Haruna's Cron Job"
             );
             return;
         }
         haruna.rest.sendEmbed(
-                Color.ORANGE,
+                0x66362d,
                 "\\➖ Pruned **" + amount + "** of saved data in database",
-                "⏲ || Haruna Cron Job"
+                "⏲ || Haruna's Cron Job"
         );
     }
 }
