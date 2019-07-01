@@ -53,7 +53,7 @@ Returns: Current status of server in JSON string.
 
 ## API Wrappers
 
-[Javascript](https://github.com/Deivu/Haruna/tree/rewrite/java/HarunaWrapper/Javascript-Node.js)
+[Javascript](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/Javascript-Node.js)
 
 Or create your own and PR if you want to contribute it.
 
@@ -65,9 +65,12 @@ Or create your own and PR if you want to contribute it.
 
 3. Configure `HarunaConfig.json` according to your liking and put it BESIDE haruna.jar
 
+> Additional Geeky Settings that you can configure is here. `<optional>` means it's not a required thing to have.
+
 ```
 - `RestAuth` is the Discord Bot List Webhook Authorization.
 - `DBLAuth` is your token for Discord Bot List.
+- `Prefix` used if you want to reverse proxy. Leave it blank if you don't need to use it. <optional>
 - `Weebhook` is your Discord Webhook link, <optional>
 - `Debug` is if you want to enable debug logs of Haruna <Defaults to: false>
 - `Port` is what port you want this server hosted <Defaults to: 1024>
