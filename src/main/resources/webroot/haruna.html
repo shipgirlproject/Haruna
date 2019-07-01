@@ -125,19 +125,22 @@
 </style>
 
 <script>
-    window.onload = async () => {
-        try {
-            const res = await fetch("/stats");
-            const data = await res.json();
-            console.log("Current Stats", data);
-            document.getElementById("ver").innerHTML = data.haruna_version;
-            document.getElementById("used").innerHTML = data.used_memory;
-            document.getElementById("free").innerHTML = data.allocated_free;
-            document.getElementById("reserved").innerHTML = data.allocated_reserved;
-            document.getElementById("max").innerHTML = data.maximum_allocatable;
-        } catch (error) {
-            console.error(error);
-        }
+    window.onload = function () {
+        fetch("stats")
+            .then(function (res) {
+                res.json()
+                    .then(function (data) {
+                        console.log("Current Stats", data);
+                        document.getElementById("ver").innerHTML = data.haruna_version;
+                        document.getElementById("used").innerHTML = data.used_memory;
+                        document.getElementById("free").innerHTML = data.allocated_free;
+                        document.getElementById("reserved").innerHTML = data.allocated_reserved;
+                        document.getElementById("max").innerHTML = data.maximum_allocatable;
+                    })
+                    .catch(console.error);
+            })
+            .catch(console.error);
+        console.log("Kyaaah >3<, you are too lewd, looking in my console.");
     }
 </script>
 
