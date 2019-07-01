@@ -5,93 +5,81 @@
 
 The ShipGirl Project. Haruna, the helping hand of Kashima. `(c) Kancolle for Haruna.`
 
-Simple webhook vote handler for [Discord Bot List](https://discordbots.org/) to help with [Kashima](https://discordbots.org/bot/424137718961012737)
-
-This API / webhook handler is ~~oversimplified~~ simple to use. As long as you can start it, it will handle everything for you to save you the hassle of creating your own vote handler.
-
-### Why Haruna?
+## Why Haruna ?
 
 > Fast and reliable.
 
-> Stand alone process that dont interfere with your bot.
+> Standalone server that manages your votes for you.
 
-> Automatic Management of Votes, haha yes you don't even need to do anything other than to configure this.
+> Easy to configure, simple to run and REST Based API for your easy voting checks.
 
-> Really cute girl OWO.
+> Haruna is a really cute girl OWO
 
-> And above of all, Haruna is a waifu material.
+> 20/10 Waifu Material rated by me
 
-### Now more easier to host
-> Now even comes with [`server.js`](https://github.com/deivu/haruna/blob/master/server.js), all you need to run to have your vote handler ready! (after you configured your settings)
+## Server Endpoints
 
-> Just copy the repo and put it on your server, then start server.js after you configured the config files, ain't that easy?
-
-> Configuration Files Examples is at config_examples folder of this repo. Drag one of those to the server.js directory, and fill it up with the needed settings.
-
-### Scroll Down at the bottom for Installation, API Wrapper, and Support for using this.
-
-## API Endpoints
-### `POST` /vote
-This is the one that you use for DBL, this is where DBL will send the votes from your bot.
+### `POST` /newVote
+The endpoint that is exposed to Discord Bot List, Refer to the image below.
 
 <p align="center">
   <img src="https://i.imgur.com/fBhIdVC.jpg">
 </p>
 
-### `GET` /hasVoted
-To check if someone voted or not.
-```
-Query String:
-  <String> id: 'user_id'
-HTTP Headers:
-  <String> authorization - Authorization key
-  <Boolean> checkWeekend - (Optional) CHeck if vote multiplier on this user is enabled (weekend special)
-Return value:
-  <Boolean> - `true` if user voted or vote multiplier is enabled, `false` if user did not vote.
-```
+### `GET` /voteInfo
+The endpoint which you can use to check for votes.
 
-### `GET` /getVotedTime
-To check how long the user will stay in database.
-```
-Query String:
-  <String> id: 'user_id'
-HTTP Headers:
-  <String> authorization - Authorization key
-Return value:
-  <Number|Boolean> - The duration of how long the user will be in cache (in ms), `false` if the user haven't voted.
-```
-
-## Some Documentation?
-[Code Documentation](https://deivu.github.io/Haruna?api)
-
-## Example Code in starting the API
-Check [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
-
-## API Wrapper?
-Check [`HarunaRequest.js`](https://github.com/Deivu/Haruna/blob/master/wrapper/HarunaRequest.js)
+Headers
 ```js
-// Example Code
-const HarunaWrapper = require('./wrapper/HarunaRequest.js');
-const Haruna = new HarunaWrapper('http://example.com:1234', 'password')
-Haruna.hasVoted('user_id').then(console.log)
-Haruna.getVotedTime('user_id').then(console.log)
+{
+  "authorization": "the authorization key you have set on Discord Bot List webhook"
+}
 ```
 
-## How to use this?
-Step 1: Clone this repo
+Query String: <String> `user_id`
 
-Step 2: Make a file `config.json`/`config.js` that contains options for Haruna (Options are passed to the constructor, check [here](https://deivu.github.io/Haruna?api)) Configuration Files Examples is at config_examples folder of this repo.
+Returns: A JSON String. `timestamp, isWeekend and timeLeft` will not be available `if the user is false`
+```js
+{
+  "user": "23213512",
+  "timestamp": 432483204, 
+  "isWeekend": true,
+  "timeLeft": 274013
+}
+```
 
-Step 3: Run [`server.js`](https://github.com/deivu/haruna/blob/master/server.js)
+### `GET` /stats
+Returns: Current status of server in JSON string.
 
-Step 4: [`HarunaRequest.js`](https://github.com/Deivu/Haruna/blob/master/wrapper/HarunaRequest.js) is the wrapper around the /GET requests of this api. Ez Pz to use isn't it? Example code is at the `API Wrapper?` section of this readme
+## API Wrappers
 
+[Javascript](https://github.com/Deivu/Haruna/tree/rewrite/java/HarunaWrapper/Javascript-Node.js)
+
+Or create your own and PR if you want to contribute it.
+
+## How to Host
+
+1. Download `haruna.jar` from our CI server. [Download](https://amanogawa.moe/jenkins/job/Haruna/ws/build/libs/)
+
+2. Download `HarunaConfig.json` from our CI server. [Download](https://amanogawa.moe/jenkins/job/Haruna/ws/config_example/)
+
+3. Configure `HarunaConfig.json` according to your liking and put it BESIDE haruna.jar
+
+```
+- `RestAuth` is the Discord Bot List Webhook Authorization.
+- `DBLAuth` is your token for Discord Bot List.
+- `Weebhook` is your Discord Webhook link, <optional>
+- `Debug` is if you want to enable debug logs of Haruna <Defaults to: false>
+- `Port` is what port you want this server hosted <Defaults to: 1024>
+- `Threads` is how many threads you want this server to have <Defaults to: 20>
+- `UserTimeout` is how long the user will stay in database in ms <Defaults to: 43200000>
+```
+
+4. Start the server via `java -jar haruna.jar`
+
+5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/` or `http://your_server_ip:the_port_you_specified/`. [Example of what you will see](https://amanogawa.moe/haruna)
 
 ## Support
-**We provide support for usage of this API in our Official Server [in HERE](https://discordapp.com/invite/FVqbtGu)**
+**We provide support for usage of this API in our Official Server's #support channel which is [in HERE](https://discordapp.com/invite/FVqbtGu)**
 
-Ask on **#Bot-Support** channel and make sure you indicate support for this API.
-
-## Notes
-* You might want to run Haruna with [`pm2`](http://pm2.keymetrics.io/) or native services so any unexpected restarts will be handled and better logging
-* This is a standalone API, so as long as the parent process is alive, disconnections should be handled automatically.
+> Made with ❤️ by Saya#0113 
