@@ -4,3 +4,82 @@
 </p>
 
 The ShipGirl Project. Haruna, the helping hand of Kashima. `(c) Kancolle for Haruna.`
+
+## Why Haruna ?
+
+> Fast and reliable.
+
+> Standalone server that manages your votes for you.
+
+> Easy to configure, simple to run and REST Based API for your easy voting checks.
+
+> Haruna is a really cute girl OWO
+
+> 20/10 Waifu Material rated by me
+
+## Server Endpoints
+
+### `POST` /newVote
+The endpoint that is exposed to Discord Bot List, Refer to the image below.
+
+<p align="center">
+  <img src="https://i.imgur.com/fBhIdVC.jpg">
+</p>
+
+### `GET` /voteInfo
+The endpoint which you can use to check for votes.
+
+Headers
+```js
+{
+  "authorization": "the authorization key you have set on Discord Bot List webhook"
+}
+```
+
+Query String: <String> `user_id`
+
+Returns: A JSON String. `timestamp, isWeekend and timeLeft` will not be available `if the user is false`
+```js
+{
+  "user": "23213512",
+  "timestamp": 432483204, 
+  "isWeekend": true,
+  "timeLeft": 274013
+}
+```
+
+### `GET` /stats
+Returns: Current status of server in JSON string.
+
+## API Wrappers
+
+[Javascript](https://github.com/Deivu/Haruna/tree/rewrite/java/HarunaWrapper/Javascript-Node.js)
+
+Or create your own and PR if you want to contribute it.
+
+## How to Host
+
+1. Download `haruna.jar` from our CI server. [Download](https://amanogawa.moe/jenkins/job/Haruna/ws/build/libs/)
+
+2. Download `HarunaConfig.json` from our CI server. [Download](https://amanogawa.moe/jenkins/job/Haruna/ws/config_example/)
+
+3. Configure `HarunaConfig.json` according to your liking and put it BESIDE haruna.jar
+
+```
+- `RestAuth` is the Discord Bot List Webhook Authorization.
+- `DBLAuth` is your token for Discord Bot List.
+- `Weebhook` is your Discord Webhook link, <optional>
+- `Debug` is if you want to enable debug logs of Haruna <Defaults to: false>
+- `Port` is what port you want this server hosted <Defaults to: 1024>
+- `Threads` is how many threads you want this server to have <Defaults to: 20>
+- `UserTimeout` is how long the user will stay in database in ms <Defaults to: 43200000>
+```
+
+4. Start the server via `java -jar haruna.jar`
+
+5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/` or `http://your_server_ip:the_port_you_specified/`. [Example of what you will see](https://amanogawa.moe/haruna)
+
+## Support
+**We provide support for usage of this API in our Official Server's #support channel which is [in HERE](https://discordapp.com/invite/FVqbtGu)**
+
+> Made with ❤️ by Saya#0113 
