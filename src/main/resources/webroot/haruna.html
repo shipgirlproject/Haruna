@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Haruna</title>
-    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" href="favicon.ico">
 </head>
 
 <style>
@@ -126,7 +126,8 @@
 
 <script>
     window.onload = function () {
-        fetch("stats")
+        var loc = window.location
+        fetch(loc.pathname.length > 1 ? `${loc.pathname}/stats` : "stats")
             .then(function (res) {
                 res.json()
                     .then(function (data) {

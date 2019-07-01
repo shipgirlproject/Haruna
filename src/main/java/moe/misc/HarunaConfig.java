@@ -9,9 +9,10 @@ import java.io.InputStream;
 
 public class HarunaConfig {
     String DBLAuth = null;
-    boolean Debug = false;
     String Weebhook = null;
+    boolean Debug = false;
 
+    public String Prefix = null;
     public String RestAuth = null;
     public int Port = 1024;
     public int Threads = 20;
@@ -30,6 +31,9 @@ public class HarunaConfig {
             JSONTokener tokener = new JSONTokener(input);
             JSONObject config = new JSONObject(tokener);
 
+            if (!config.has("RestAuth")) throw new Exception("RestAuth not found in config");
+            if (!config.has("DBLAuth")) throw new Exception("RestAuth not found in config");
+
             String RestAuth = config.getString("RestAuth");
             if (RestAuth == null) throw new Exception("RestAuth not found in config");
             String DBLAuth = config.getString("DBLAuth");
@@ -38,17 +42,34 @@ public class HarunaConfig {
             this.DBLAuth = DBLAuth;
             this.RestAuth = RestAuth;
 
-            this.Debug = config.getBoolean("Debug");
+            if (config.has("Debug")) {
+                this.Debug = config.getBoolean("Debug");
+            }
 
-            String Weebhook = config.getString("Weebhook");
-            int Port = config.getInt("Port");
-            int Threads  = config.getInt("Threads");
-            long UserTimeout = config.getLong("UserTimeout");
+            if (config.has("Prefix")) {
+                String Prefix = config.getString("Prefix");
+                if (Prefix != null) this.Prefix = "/" + Prefix;
+            }
 
-            if (Weebhook != null) this.Weebhook = Weebhook;
-            if (Threads != 0) this.Threads = Threads;
-            if (Port != 0) this.Port = Port;
-            if (UserTimeout != 0) this.UserTimeout = UserTimeout;
+            if (config.has("Weebhook")) {
+                String Weebhook = config.getString("Weebhook");
+                if (Weebhook != null) this.Weebhook = Weebhook;
+            }
+
+            if (config.has("Port")) {
+                int Port = config.getInt("Port");
+                if (Port != 0) this.Port = Port;
+            }
+
+            if (config.has("Threads")) {
+                int Threads = config.getInt("Threads");
+                if (Threads != 0) this.Threads = Threads;
+            }
+
+            if (config.has("UserTimeout")) {
+                long UserTimeout = config.getLong("UserTimeout");
+                if (UserTimeout != 0) this.UserTimeout = UserTimeout;
+            }
 
         } catch (Exception error) {
             haruna.formatTrace(error.getMessage(), error.getStackTrace());

@@ -29,31 +29,40 @@ public class Haruna {
     private final HarunaStats stats = new HarunaStats(this);
 
     private final HttpServer server;
-    private final Router routes;
+    private final Router mainRouter;
+    private final Router apiRoutes;
 
     Haruna() {
         server = vertx.createHttpServer();
-        routes = Router.router(vertx);
+        mainRouter = Router.router(vertx);
+        apiRoutes = Router.router(vertx);
     }
 
     void routes(NewVote newVote, VoteInfo voteInfo) {
         harunaLog.info("Setting the API routes....");
-        routes.route().handler(BodyHandler.create());
-        routes.route(HttpMethod.POST, "/newVote/")
+        apiRoutes.route().handler(BodyHandler.create());
+        apiRoutes.route(HttpMethod.POST, "/newVote/")
                 .blockingHandler(newVote::execute, true)
                 .enable();
-        routes.route(HttpMethod.GET, "/voteInfo/")
+        apiRoutes.route(HttpMethod.GET, "/voteInfo/")
                 .produces("application/json")
                 .blockingHandler(voteInfo::execute, false)
                 .enable();
-        routes.route(HttpMethod.GET, "/stats/")
+        apiRoutes.route(HttpMethod.GET, "/stats/")
                 .produces("application/json")
                 .handler(stats::execute)
                 .enable();
-        routes.route().handler(
-                StaticHandler.create()
-                        .setIndexPage("/haruna.html")
-        );
+        apiRoutes.route("/*")
+                .handler(StaticHandler.create().setIndexPage("haruna.html"))
+                .enable();
+        if (config.Prefix != null) {
+            mainRouter.mountSubRouter(config.Prefix, apiRoutes);
+            mainRouter.route(HttpMethod.GET, "/favicon.ico")
+                    .handler(context -> context.response().sendFile("webroot/favicon.ico").close())
+                    .enable();
+        } else {
+            mainRouter.mountSubRouter("/", apiRoutes);
+        }
         harunaLog.info("API routes configured!");
     }
 
@@ -68,7 +77,7 @@ public class Haruna {
         );
         harunaLog.info("Cron Jobs are now armed!");
         harunaLog.info("Setting the configured routes and trying to listen @ Port " + config.Port);
-        server.requestHandler(routes).listen(config.Port);
+        server.requestHandler(mainRouter).listen(config.Port);
         harunaLog.info("Success. Haruna is now online, configured to listen @ Port " + config.Port);
         sendEmbed();
     }

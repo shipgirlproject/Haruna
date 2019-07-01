@@ -1,9 +1,4 @@
 {
     "RestAuth": "owo",
-    "DBLAuth": "uwu",
-    "Weebhook": "weeb",
-    "Debug": false,
-    "Port": 1024,
-    "Threads": 10,
-    "UserTimeout": 46800000
+    "DBLAuth": "uwu"
 }
