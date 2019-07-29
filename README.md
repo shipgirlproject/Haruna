@@ -23,7 +23,7 @@ The ShipGirl Project. Haruna, the helping hand of Kashima. `(c) Kancolle for Har
 The endpoint that is exposed to Discord Bot List, Refer to the image below.
 
 <p align="center">
-  <img src="https://i.imgur.com/fBhIdVC.jpg">
+  <img src="https://i.imgur.com/TaVWQ5y.png">
 </p>
 
 ### `GET` /voteInfo
@@ -54,6 +54,7 @@ Returns: Current status of server in JSON string.
 ## API Wrappers
 
 [Javascript](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/Javascript-Node.js)
+
 [C#](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/CSharp-Dotnet)
 
 Or create your own and PR if you want to contribute it.
