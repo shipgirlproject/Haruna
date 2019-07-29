@@ -54,6 +54,7 @@ Returns: Current status of server in JSON string.
 ## API Wrappers
 
 [Javascript](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/Javascript-Node.js)
+[C#](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/CSharp-Dotnet)
 
 Or create your own and PR if you want to contribute it.
 
