@@ -76,7 +76,7 @@ Or create your own and PR if you want to contribute it.
 - `Weebhook` is your Discord Webhook link, <optional>
 - `Debug` is if you want to enable debug logs of Haruna <optional> <Defaults to: false>
 - `Port` is what port you want this server hosted <optional> <Defaults to: 1024>
-- `Threads` is how many threads you want this server to have <optional> <Defaults to: 20>
+- `Threads` is how many threads you want this server to have <optional> <Defaults to: 10>
 - `UserTimeout` is how long the user will stay in database in ms <optional> <Defaults to: 43200000>
 ```
 
