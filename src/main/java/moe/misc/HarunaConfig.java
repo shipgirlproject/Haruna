@@ -15,7 +15,7 @@ public class HarunaConfig {
     public String Prefix = null;
     public String RestAuth = null;
     public int Port = 1024;
-    public int Threads = 20;
+    public int Threads = 10;
     public long UserTimeout = 43200000;
 
     private final String HarunaVersion = getClass().getPackage().getImplementationVersion();

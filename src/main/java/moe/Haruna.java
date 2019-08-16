@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class Haruna {
 
     private final HarunaStats stats = new HarunaStats(this);
 
+    private final ScheduledExecutorService scheduledThreadPool = Executors.newSingleThreadScheduledExecutor();
     private final HttpServer server;
     private final Router mainRouter;
     private final Router apiRoutes;
@@ -69,10 +71,10 @@ public class Haruna {
     void listen() {
         harunaLog.info("Initializing the Cron Jobs....");
         HarunaCron harunaCron = new HarunaCron(this);
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(
+        scheduledThreadPool.scheduleAtFixedRate(
                 harunaCron::execute, 30, 360, TimeUnit.SECONDS
         );
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(
+        scheduledThreadPool.scheduleAtFixedRate(
                 stats::updateJsonObject, 0, 240, TimeUnit.SECONDS
         );
         harunaLog.info("Cron Jobs are now armed!");
