@@ -35,7 +35,7 @@ public class HarunaRest {
                 .send(res -> {
                     try {
                         HttpResponse<Buffer> response = res.result();
-                        if (res.succeeded() && response.getHeader("content-type").equals("application/json")) {
+                        if (res.succeeded() && response.getHeader("Content-Type").startsWith("application/json")) {
                             JsonObject body = response.bodyAsJsonObject();
                             String username = body.getString("username");
                             if (username == null) username = "???";
