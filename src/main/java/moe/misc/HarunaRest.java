@@ -33,18 +33,28 @@ public class HarunaRest {
         client.requestAbs(HttpMethod.GET, "https://discordbots.org/api/users/" + id)
                 .putHeader("authorization", DBLAuth)
                 .send(res -> {
-                    if (res.succeeded()) {
-                        JsonObject body = res.result().bodyAsJsonObject();
-                        String username = body.getString("username");
-                        if (username == null) username = "???";
-                        String discrim = body.getString("discriminator");
-                        if (discrim == null) discrim = "???";
-                        result.complete(
-                                username + "#" + discrim
-                        );
-                    } else {
+                    try {
+                        HttpResponse<Buffer> response = res.result();
+                        if (res.succeeded() && response.getHeader("content-type").equals("application/json")) {
+                            JsonObject body = response.bodyAsJsonObject();
+                            String username = body.getString("username");
+                            if (username == null) username = "???";
+                            String discrim = body.getString("discriminator");
+                            if (discrim == null) discrim = "???";
+                            result.complete(
+                                    username + "#" + discrim
+                            );
+                        } else {
+                            result.complete(null);
+                            Exception error = new Exception(
+                                    response.statusCode() + ": "+ response.statusMessage()
+                            );
+                            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+                        }
+                    } catch (Exception error) {
+                        // Anything that is caught here is considered as an issue and worth reporting to the developer
                         result.complete(null);
-                        haruna.formatTrace(res.cause().getMessage(), res.cause().getStackTrace());
+                        haruna.formatTrace(error.getMessage(), error.getStackTrace());
                     }
                 });
         return result;
