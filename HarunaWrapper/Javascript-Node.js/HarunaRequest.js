@@ -55,9 +55,6 @@ class HarunaRequest {
                 if (res.status !== 200) throw new Error(`Status Code: ${res.status}`)
                 return res.json()
             })
-            .catch((error) => {
-                throw error;
-            })
             .finally(() => clearTimeout(timeout));
     }
 }
