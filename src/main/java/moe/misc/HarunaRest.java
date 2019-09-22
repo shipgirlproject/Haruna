@@ -34,27 +34,24 @@ public class HarunaRest {
                 .putHeader("authorization", DBLAuth)
                 .send(res -> {
                     try {
+                        if (res.failed()) {
+                            Throwable error = res.cause();
+                            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+                            result.complete(null);
+                            return;
+                        }
                         HttpResponse<Buffer> response = res.result();
-                        if (res.succeeded() && response.getHeader("Content-Type").startsWith("application/json")) {
+                        if (response.getHeader("Content-Type").startsWith("application/json")) {
                             JsonObject body = response.bodyAsJsonObject();
                             String username = body.getString("username");
                             if (username == null) username = "???";
                             String discrim = body.getString("discriminator");
                             if (discrim == null) discrim = "???";
-                            result.complete(
-                                    username + "#" + discrim
-                            );
-                        } else {
-                            result.complete(null);
-                            Exception error = new Exception(
-                                    response.statusCode() + ": "+ response.statusMessage()
-                            );
-                            haruna.formatTrace(error.getMessage(), error.getStackTrace());
-                        }
+                            result.complete(username + "#" + discrim);
+                        } else result.complete(null);
                     } catch (Exception error) {
-                        // Anything that is caught here is considered as an issue and worth reporting to the developer
-                        result.complete(null);
                         haruna.formatTrace(error.getMessage(), error.getStackTrace());
+                        result.complete(null);
                     }
                 });
         return result;
@@ -66,16 +63,8 @@ public class HarunaRest {
                 .sendJsonObject(
                         new JsonObject().put("embeds", array),
                         res -> {
-                            if (res.failed()) {
-                                haruna.formatTrace(res.cause().getMessage(), res.cause().getStackTrace());
-                                return;
-                            }
-                            HttpResponse<Buffer> buffer = res.result();
-                            int statusCode = buffer.statusCode();
-                            if (statusCode == 200 || statusCode == 204) return;
-                            Exception error = new Exception(
-                                    buffer.statusCode() + ": "+ buffer.statusMessage()
-                            );
+                            if (res.succeeded()) return;
+                            Throwable error = res.cause();
                             haruna.formatTrace(error.getMessage(), error.getStackTrace());
                         });
     }
