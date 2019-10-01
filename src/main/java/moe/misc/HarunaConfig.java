@@ -32,15 +32,10 @@ public class HarunaConfig {
             JSONObject config = new JSONObject(tokener);
 
             if (!config.has("RestAuth")) throw new Exception("RestAuth not found in config");
-            if (!config.has("DBLAuth")) throw new Exception("RestAuth not found in config");
+            if (!config.has("DBLAuth")) throw new Exception("DBLAuth not found in config");
 
-            String RestAuth = config.getString("RestAuth");
-            if (RestAuth == null) throw new Exception("RestAuth not found in config");
-            String DBLAuth = config.getString("DBLAuth");
-            if (DBLAuth == null) throw new Exception("DBLAuth not found in config");
-
-            this.DBLAuth = DBLAuth;
-            this.RestAuth = RestAuth;
+            this.DBLAuth = config.getString("RestAuth");
+            this.RestAuth = config.getString("DBLAuth");
 
             if (config.has("Debug")) {
                 this.Debug = config.getBoolean("Debug");
