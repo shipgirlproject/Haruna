@@ -30,7 +30,7 @@ public class HarunaRest {
 
     public CompletableFuture<String> getUser(String id) {
         CompletableFuture<String> result = new CompletableFuture<>();
-        client.requestAbs(HttpMethod.GET, "https://discordbots.org/api/users/" + id)
+        client.requestAbs(HttpMethod.GET, "https://top.gg/api/users/" + id)
                 .putHeader("authorization", DBLAuth)
                 .send(res -> {
                     try {
