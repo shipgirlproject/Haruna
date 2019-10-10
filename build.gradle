@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-version '3.2.0-BETA'
+version '3.2.0'
 
 sourceCompatibility = 1.8
 
