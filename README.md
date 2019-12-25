@@ -61,7 +61,7 @@ Or create your own and PR if you want to contribute it.
 
 ## How to Host
 
-1. Download `haruna.jar` from Github Releases. [Click me](https://amanogawa.moe/jenkins/job/Haruna/ws/build/libs/)
+1. Download the latest `haruna.jar` from Github Releases. [Click me](https://github.com/Deivu/Haruna/releases)
 
 2. Download `HarunaConfig.json` from github. [Click me](https://github.com/Deivu/Haruna/blob/master/config_example/HarunaConfig.json)
 
