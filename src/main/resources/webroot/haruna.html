@@ -15,7 +15,6 @@
 
 <style>
     html,
-    body,
     h1,
     h2,
     h3,
@@ -24,11 +23,15 @@
     h6 {
         font-family: "Roboto", sans-serif
     }
+    body {
+        margin-bottom: 3.5rem;
+    }
     .footer {
         overflow: hidden;
         position: fixed;
         left: 0;
         bottom: 0;
+        height: 3.5rem;
         width: 100%;
         background-color: black;
         color: white;
@@ -43,12 +46,14 @@
             .then(function(res) {
                 res.json()
                     .then(function(data) {
+                        var current = new Date(data.stats_last_updated);
                         console.log("Current Stats", data);
                         document.getElementById("harunaver").innerHTML = "Version " + data.haruna_version;
                         document.getElementById("memoryusage").innerHTML = data.used_memory + " / " + data.maximum_allocatable;
-                        // document.getElementById("currentuptime").innerHTML = ;
+                        document.getElementById("currentuptime").innerHTML = data.program_uptime;
                         document.getElementById("votessaved").innerHTML = data.saved_data;
                         document.getElementById("requestsfromboot").innerHTML = data.api_requests_received;
+                        document.getElementById("datetime").innerHTML = current.toLocaleDateString() + " " + current.toLocaleTimeString();
                     })
                     .catch(console.error);
             })
@@ -81,6 +86,12 @@
           <p><a href="https://top.gg/api/docs#webhooks">A Top.gg (Discord bot list) vote webhook server</a></p>
           <p>Developed by: <a href="https://github.com/Deivu">Saya</a></p>
         </div>
+        <hr>
+        <div class="w3-container">
+          <p>Used by: <a href="https://top.gg/bot/kashima-is-a-good-girl">Kashima</a>, and many more!</p>
+          <p>Last Updated at: <span id="datetime"> Loading...</span></p>
+        </div>
+
       </div>
       <br>
       <br>
@@ -139,7 +150,6 @@
 
   <footer class="footer">
     <p>The Shipgirl Project, &copy; Kancolle for Haruna</p>
-    <p>Used by: <a href="https://top.gg/bot/kashima-is-a-good-girl">Kashima</a>, and many more!</p>
   </footer>
 </div>
 </body>

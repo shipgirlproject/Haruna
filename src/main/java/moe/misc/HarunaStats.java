@@ -6,6 +6,7 @@ import io.vertx.ext.web.RoutingContext;
 import moe.Haruna;
 
 import java.lang.management.ManagementFactory;
+import java.time.Instant;
 
 public class HarunaStats {
     private final OperatingSystemMXBean system = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
@@ -40,11 +41,13 @@ public class HarunaStats {
                 .put("haruna_version", haruna.config.getHarunaVersion())
                 .put("saved_data", currentVoteSaved)
                 .put("api_requests_received", haruna.requestsReceived)
+                .put("program_uptime", TimeUtil.getDurationBreakdown(this.haruna.runtime.getUptime(), true))
                 .put("cpu_usage", Math.round(system.getSystemCpuLoad() * 100) + " %")
                 .put("used_memory", convertRam(totalMemory - freeMemory))
                 .put("allocated_free", convertRam(freeMemory))
                 .put("allocated_reserved", convertRam(totalMemory))
-                .put("maximum_allocatable", convertRam((double) runtime.maxMemory()));
+                .put("maximum_allocatable", convertRam((double) runtime.maxMemory()))
+                .put("stats_last_updated", Instant.now().toEpochMilli());
 
         haruna.harunaLog.debug("Cached JsonStats Object updated.");
     }

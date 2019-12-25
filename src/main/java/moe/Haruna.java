@@ -13,6 +13,8 @@ import moe.routes.VoteInfo;
 import moe.storage.HarunaStore;
 
 import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -24,6 +26,7 @@ public class Haruna {
     public final HarunaLog harunaLog = new HarunaLog(this);
     public final HarunaConfig config = new HarunaConfig(this, this.getLocation());
     public final Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(config.Threads));
+    public final RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
     public final HarunaStore store = new HarunaStore(this, this.getLocation());
     public final HarunaRest rest = new HarunaRest(this, config);
 
