@@ -15,6 +15,7 @@ public class VoteInfo {
     public void execute(RoutingContext context) {
         HttpServerRequest request = context.request();
         HttpServerResponse response = context.response();
+        haruna.requestsReceived++;
         try {
             String auth = request.getHeader("authorization");
             if (auth == null || !auth.equals(haruna.config.RestAuth)) {

@@ -61,9 +61,9 @@ Or create your own and PR if you want to contribute it.
 
 ## How to Host
 
-1. Download `haruna.jar` from our CI server. [Download](https://amanogawa.moe/jenkins/job/Haruna/ws/build/libs/)
+1. Download `haruna.jar` from Github Releases. [Click me](https://amanogawa.moe/jenkins/job/Haruna/ws/build/libs/)
 
-2. Download `HarunaConfig.json` from our CI server. [Download](https://amanogawa.moe/jenkins/job/Haruna/ws/config_example/)
+2. Download `HarunaConfig.json` from github. [Click me](https://github.com/Deivu/Haruna/blob/master/config_example/HarunaConfig.json)
 
 3. Configure `HarunaConfig.json` according to your liking and put it BESIDE haruna.jar
 
@@ -82,7 +82,7 @@ Or create your own and PR if you want to contribute it.
 
 4. Start the server via `java -jar haruna.jar`
 
-5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/` or `http://your_server_ip:the_port_you_specified/`. [Example of what you will see](https://amanogawa.moe/haruna)
+5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/` or `http://your_server_ip:the_port_you_specified/`. [Example](http://it-snake.net:1101/)
 
 ## Support
 **We provide support for usage of this API in our Official Server's #support channel which is [in HERE](https://discordapp.com/invite/FVqbtGu)**

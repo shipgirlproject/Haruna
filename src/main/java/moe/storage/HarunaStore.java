@@ -28,7 +28,6 @@ public class HarunaStore {
                 ).execute();
             }
         } catch (Exception error) {
-            error.printStackTrace();
             haruna.formatTrace(error.getMessage(), error.getStackTrace());
             System.exit(0);
         }
@@ -62,6 +61,20 @@ public class HarunaStore {
                         data.user = results.getString("user");
                         data.timestamp = results.getLong("timestamp");
                         data.weekend = results.getBoolean("weekend");
+                    }
+                }
+            }
+        }
+        return data;
+    }
+
+    public int savedCount() throws Exception {
+        int data = 0;
+        try (Connection connection = pool.getConnection()) {
+            try (PreparedStatement cmd = connection.prepareStatement("SELECT COUNT(*) AS count FROM HarunaStore")) {
+                try (ResultSet results = cmd.executeQuery()) {
+                    while (results.next()) {
+                        data = results.getInt("count");
                     }
                 }
             }

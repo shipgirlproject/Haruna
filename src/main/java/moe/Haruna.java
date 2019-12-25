@@ -34,6 +34,8 @@ public class Haruna {
     private final Router mainRouter;
     private final Router apiRoutes;
 
+    public long requestsReceived = 0;
+
     Haruna() {
         server = vertx.createHttpServer();
         mainRouter = Router.router(vertx);
@@ -59,9 +61,6 @@ public class Haruna {
                 .enable();
         if (config.Prefix != null) {
             mainRouter.mountSubRouter(config.Prefix, apiRoutes);
-            mainRouter.route(HttpMethod.GET, "/favicon.ico")
-                    .handler(context -> context.response().sendFile("webroot/favicon.ico").close())
-                    .enable();
         } else {
             mainRouter.mountSubRouter("/", apiRoutes);
         }

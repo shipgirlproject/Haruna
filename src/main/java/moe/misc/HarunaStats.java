@@ -28,13 +28,24 @@ public class HarunaStats {
     public void updateJsonObject() {
         double totalMemory = runtime.totalMemory();
         double freeMemory = runtime.freeMemory();
+        int currentVoteSaved = 0;
+
+        try {
+            currentVoteSaved = haruna.store.savedCount();
+        } catch (Exception error) {
+            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+        }
+
         stats = new JsonObject()
                 .put("haruna_version", haruna.config.getHarunaVersion())
+                .put("saved_data", currentVoteSaved)
+                .put("api_requests_received", haruna.requestsReceived)
                 .put("cpu_usage", Math.round(system.getSystemCpuLoad() * 100) + " %")
                 .put("used_memory", convertRam(totalMemory - freeMemory))
                 .put("allocated_free", convertRam(freeMemory))
                 .put("allocated_reserved", convertRam(totalMemory))
                 .put("maximum_allocatable", convertRam((double) runtime.maxMemory()));
+
         haruna.harunaLog.debug("Cached JsonStats Object updated.");
     }
 

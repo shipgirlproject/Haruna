@@ -2,141 +2,53 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Haruna</title>
-    <link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <title>Haruna</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/Deivu/Haruna/master/assets/favicon.ico">
 </head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
-    body {
-        background-color: #708090;
-        color: #F0FFFF
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Roboto", sans-serif
     }
 
-    h1 {
-        font-family: "Brush Script MT", cursive;
-        font-size: 24px;
-        font-style: normal;
-        font-variant: normal;
-        font-weight: 700;
-        line-height: 26.4px;
-    }
-
-    h3 {
-        font-family: "Brush Script MT", cursive;
-        font-size: 14px;
-        font-style: normal;
-        font-variant: normal;
-        font-weight: 700;
-        line-height: 15.4px;
-    }
-
-    p {
-        font-family: "Brush Script MT", cursive;
-        font-size: 14px;
-        font-style: normal;
-        font-variant: normal;
-        font-weight: 400;
-        line-height: 20px;
-    }
-
-    table {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        margin: 0;
-        padding: 0;
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
         width: 100%;
-        table-layout: fixed;
-    }
-
-    table caption {
-        font-size: 1.5em;
-        margin: .5em 0 .75em;
-    }
-
-    table tr {
-        background-color: #f8f8f8;
-        color: #202124;
-        border: 1px solid #ddd;
-        padding: .35em;
-    }
-
-    table th,
-    table td {
-        padding: .625em;
-        color: #202124;
+        background-color: black;
+        color: white;
         text-align: center;
-    }
-
-    table th {
-        font-size: .85em;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-    }
-
-    @media screen and (max-width: 600px) {
-        table {
-            border: 0;
-        }
-
-        table caption {
-            font-size: 1.3em;
-        }
-
-        table thead {
-            border: none;
-            clip: rect(0 0 0 0);
-            height: 1px;
-            margin: -1px;
-            overflow: hidden;
-            padding: 0;
-            position: absolute;
-            width: 1px;
-        }
-
-        table tr {
-            border-bottom: 3px solid #ddd;
-            display: block;
-            margin-bottom: .625em;
-        }
-
-        table td {
-            border-bottom: 1px solid #ddd;
-            display: block;
-            font-size: .8em;
-            text-align: right;
-        }
-
-        table td::before {
-            /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-            content: attr(data-label);
-            float: left;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        table td:last-child {
-            border-bottom: 0;
-        }
     }
 </style>
 
 <script>
-    window.onload = function () {
+    window.onload = function() {
         var loc = window.location
         fetch(loc.pathname.length > 1 ? `${loc.pathname}/stats` : "stats")
-            .then(function (res) {
+            .then(function(res) {
                 res.json()
-                    .then(function (data) {
+                    .then(function(data) {
                         console.log("Current Stats", data);
-                        document.getElementById("ver").innerHTML = data.haruna_version;
-                        document.getElementById("used").innerHTML = data.used_memory;
-                        document.getElementById("free").innerHTML = data.allocated_free;
-                        document.getElementById("reserved").innerHTML = data.allocated_reserved;
-                        document.getElementById("max").innerHTML = data.maximum_allocatable;
+                        document.getElementById("harunaver").innerHTML = "Version " + data.haruna_version;
+                        document.getElementById("usedmem").innerHTML = data.used_memory;
+                        document.getElementById("maxalloc").innerHTML = data.maximum_allocatable;
+                        document.getElementById("votessaved").innerHTML = data.saved_data;
+                        document.getElementById("requestsfromboot").innerHTML = data.api_requests_received;
                     })
                     .catch(console.error);
             })
@@ -145,40 +57,94 @@
     }
 </script>
 
-<body>
-    <center>
-        <h1> Haruna </h1>
-        <h3>Version: <span id="ver">Loading..</span></h3>
-        <h3><a href="https://github.com/Deivu/Haruna">Haruna's Github Repository</a></h3>
-        <p>The Discord Bot List Vote Webhook Handler</p>
-    </center>
-    <br>
-    <center>
-        <img src="https://vignette.wikia.nocookie.net/kancolle/images/6/61/Haruna_Shopping_Full.png/revision/latest/"
-            height="500" width="182">
-        <h3>Program Statistics</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Used Memory</th>
-                    <th>Allocated Free</th>
-                    <th>Allocated Reserved</th>
-                    <th>Maximum Allocatable</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="used">...</td>
-                    <td id="free">...</td>
-                    <td id="reserved">...</td>
-                    <td id="max">...</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Program Developed by: <b><a href="https://github.com/Deivu">Saya</a></b></p>
-        <p>The Shipgirl Project</p>
-        <p>(c) Kancolle for Haruna</p>
-    </center>
+<body class="w3-light-grey">
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+
+    <!-- Left Column -->
+    <div class="w3-third">
+
+      <div class="w3-white w3-text-black w3-card-4">
+        <div class="w3-display-container">
+          <img src="https://raw.githubusercontent.com/Deivu/Haruna/master/assets/profile.jpg" style="width:100%" alt="Avatar">
+          <div class="w3-display-bottomleft w3-container w3-text-black">
+          </div>
+        </div>
+        <div class="w3-container">
+          <h2>Haruna</h2>
+          <p id="harunaver">Version ...</p>
+          <p><a href="https://github.com/Deivu/Haruna">Github Repository</a></p>
+          <p><a href="https://top.gg/api/docs#webhooks">A Top.gg (Discord bot list) vote webhook server</a></p>
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <!-- End Left Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-twothird">
+
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-gray"></i>Haruna's Statistics</h2>
+        <div class="w3-container">
+          <p>Used Memory</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-black" style="width:100%">
+              <p id="usedmem">Loading ...</p>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <p>Maximum Allocatable</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-black" style="width:100%">
+              <p id="maxalloc">Loading ...</p>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <p>Vote(s) Currently Saved</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-black" style="width:100%">
+              <p id="votessaved">Loading ...</p>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <p>API Request(s) since boot</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-black" style="width:100%">
+              <p id="requestsfromboot">Loading ...</p>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <!-- End Right Column -->
+      </div>
+
+      <!-- End Grid -->
+    </div>
+
+    <!-- End Page Container -->
+  </div>
+
+  <footer class="footer">
+    <p>The Shipgirl Project</p>
+    <p>Developed by: <a href="https://github.com/Deivu">Saya</a></p>
+    <p>Used by: <a href="https://top.gg/bot/kashima-is-a-good-girl">Kashima</a>, and many more!</p>
+    <p>&copy; Kancolle for Haruna</p>
+  </footer>
+</div>
 </body>
 
 </html>

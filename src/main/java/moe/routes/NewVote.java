@@ -16,8 +16,8 @@ public class NewVote {
     public void execute(RoutingContext context) {
         HttpServerRequest request = context.request();
         HttpServerResponse response = context.response();
-
         try {
+            haruna.requestsReceived++;
             String auth = request.getHeader("Authorization");
             if (auth == null || !auth.equals(haruna.config.RestAuth)) {
                 response.setStatusCode(401).setStatusMessage("Unauthorized").end();
