@@ -9,9 +9,9 @@ import java.io.InputStream;
 
 public class HarunaConfig {
     String DBLAuth = null;
-    String Weebhook = null;
-    boolean Debug = false;
 
+    public String Weebhook = null;
+    public boolean Debug = false;
     public String Prefix = null;
     public String RestAuth = null;
     public int Port = 1024;
@@ -34,8 +34,8 @@ public class HarunaConfig {
             if (!config.has("RestAuth")) throw new Exception("RestAuth not found in config");
             if (!config.has("DBLAuth")) throw new Exception("DBLAuth not found in config");
 
-            this.DBLAuth = config.getString("RestAuth");
-            this.RestAuth = config.getString("DBLAuth");
+            this.DBLAuth = config.getString("DBLAuth");
+            this.RestAuth = config.getString("RestAuth");
 
             if (config.has("Debug")) {
                 this.Debug = config.getBoolean("Debug");

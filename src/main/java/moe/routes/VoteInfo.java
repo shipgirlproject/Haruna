@@ -20,7 +20,11 @@ public class VoteInfo {
             String auth = request.getHeader("authorization");
             if (auth == null || !auth.equals(haruna.config.RestAuth)) {
                 response.setStatusCode(401).setStatusMessage("Unauthorized").end();
-                haruna.harunaLog.debug("Rejected GET request in /voteInfo from " + request.host());
+                if (auth == null) {
+                    haruna.harunaLog.debug("Rejected GET request in /voteInfo from " + request.host() + " | No Auth Header");
+                } else {
+                    haruna.harunaLog.debug("Rejected GET request in /voteInfo from " + request.host() +" | Wrong Rest Auth, Received: " + auth);
+                }
                 return;
             }
 

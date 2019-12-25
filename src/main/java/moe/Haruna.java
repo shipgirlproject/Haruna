@@ -80,6 +80,14 @@ public class Haruna {
                 stats::updateJsonObject, 0, 240, TimeUnit.SECONDS
         );
         harunaLog.info("Cron Jobs are now armed!");
+
+        if (this.config.Debug) harunaLog.debug("Haruna is running in debug mode.");
+        harunaLog.debug("Rest Auth is set to: " + this.config.RestAuth);
+        if (this.config.Prefix != null) harunaLog.debug("Route Prefix is set to: " + this.config.Prefix);
+        if (this.config.Weebhook != null) harunaLog.debug("Webhook is set to: " + this.config.Weebhook);
+        harunaLog.debug("Thread pool is set to: " + this.config.Threads);
+        harunaLog.debug("Users will be cleaned after: " + this.config.UserTimeout + "ms");
+
         harunaLog.info("Setting the configured routes and trying to listen @ Port " + config.Port);
         server.requestHandler(mainRouter).listen(config.Port);
         harunaLog.info("Success. Haruna is now online, configured to listen @ Port " + config.Port);

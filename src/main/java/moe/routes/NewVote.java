@@ -21,7 +21,11 @@ public class NewVote {
             String auth = request.getHeader("Authorization");
             if (auth == null || !auth.equals(haruna.config.RestAuth)) {
                 response.setStatusCode(401).setStatusMessage("Unauthorized").end();
-                haruna.harunaLog.debug("Rejected POST request in /newVote from " + request.host());
+                if (auth == null) {
+                    haruna.harunaLog.debug("Rejected POST request in /newVote from " + request.host() + " | No Auth Header");
+                } else {
+                    haruna.harunaLog.debug("Rejected POST request in /newVote from " + request.host() + " | Wrong Rest Auth, Received: " + auth);
+                }
                 return;
             }
 
