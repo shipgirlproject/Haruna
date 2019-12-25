@@ -24,8 +24,8 @@
     h6 {
         font-family: "Roboto", sans-serif
     }
-
     .footer {
+        overflow: hidden;
         position: fixed;
         left: 0;
         bottom: 0;
@@ -45,8 +45,8 @@
                     .then(function(data) {
                         console.log("Current Stats", data);
                         document.getElementById("harunaver").innerHTML = "Version " + data.haruna_version;
-                        document.getElementById("usedmem").innerHTML = data.used_memory;
-                        document.getElementById("maxalloc").innerHTML = data.maximum_allocatable;
+                        document.getElementById("memoryusage").innerHTML = data.used_memory + " / " + data.maximum_allocatable;
+                        // document.getElementById("currentuptime").innerHTML = ;
                         document.getElementById("votessaved").innerHTML = data.saved_data;
                         document.getElementById("requestsfromboot").innerHTML = data.api_requests_received;
                     })
@@ -79,6 +79,7 @@
           <p id="harunaver">Version ...</p>
           <p><a href="https://github.com/Deivu/Haruna">Github Repository</a></p>
           <p><a href="https://top.gg/api/docs#webhooks">A Top.gg (Discord bot list) vote webhook server</a></p>
+          <p>Developed by: <a href="https://github.com/Deivu">Saya</a></p>
         </div>
       </div>
       <br>
@@ -89,23 +90,13 @@
 
     <!-- Right Column -->
     <div class="w3-twothird">
-
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-gray"></i>Haruna's Statistics</h2>
         <div class="w3-container">
-          <p>Used Memory</p>
+          <p>Used Memory / Maximum Allocatable</p>
           <div class="w3-light-grey w3-round-xlarge w3-small">
             <div class="w3-container w3-center w3-round-xlarge w3-black" style="width:100%">
-              <p id="usedmem">Loading ...</p>
-            </div>
-          </div>
-          <hr>
-        </div>
-        <div class="w3-container">
-          <p>Maximum Allocatable</p>
-          <div class="w3-light-grey w3-round-xlarge w3-small">
-            <div class="w3-container w3-center w3-round-xlarge w3-black" style="width:100%">
-              <p id="maxalloc">Loading ...</p>
+              <p id="memoryusage">Loading ...</p>
             </div>
           </div>
           <hr>
@@ -128,7 +119,15 @@
           </div>
           <hr>
         </div>
-
+        <div class="w3-container">
+          <p>Uptime</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-black" style="width:100%">
+              <p id="currentuptime">Loading ...</p>
+            </div>
+          </div>
+          <hr>
+        </div>
         <!-- End Right Column -->
       </div>
 
@@ -139,10 +138,8 @@
   </div>
 
   <footer class="footer">
-    <p>The Shipgirl Project</p>
-    <p>Developed by: <a href="https://github.com/Deivu">Saya</a></p>
+    <p>The Shipgirl Project, &copy; Kancolle for Haruna</p>
     <p>Used by: <a href="https://top.gg/bot/kashima-is-a-good-girl">Kashima</a>, and many more!</p>
-    <p>&copy; Kancolle for Haruna</p>
   </footer>
 </div>
 </body>
