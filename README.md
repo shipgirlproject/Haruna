@@ -104,7 +104,7 @@ Or create your own and PR if you want to contribute it.
 - `DBLAuth` is your token for Discord Bot List.
 - `Prefix` used if you want to reverse proxy. Leave it blank if you don't need to use it (Optional)
 - `Weebhook` is your Discord Webhook link (Optional)
-- `PostWeebhook` is where Haruna will try to send a POST request of the user who voted [Refer Here](https://github.com/Deivu/Haruna#webhook-api-v140-and-later) (Optional)
+- `PostWeebhook` is where Haruna will try to send a POST request of the user who voted (Optional)
 - `Debug` is if you want to enable debug logs of Haruna (Optional, Default: false)
 - `Port` is what port you want this server hosted (Optional, Default: 1024)
 - `Threads` is how many threads you want this server to have (Optional, Default: Your CPU Thread Count)
