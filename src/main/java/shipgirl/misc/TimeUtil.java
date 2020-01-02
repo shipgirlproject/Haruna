@@ -1,4 +1,4 @@
-package moe.misc;
+package shipgirl.misc;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

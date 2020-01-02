@@ -1,7 +1,7 @@
-package moe.misc;
+package shipgirl.misc;
 
-import moe.Haruna;
-import moe.Sortie;
+import shipgirl.Haruna;
+import shipgirl.Sortie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

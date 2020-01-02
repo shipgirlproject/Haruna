@@ -1,6 +1,6 @@
-package moe.misc;
+package shipgirl.misc;
 
-import moe.Haruna;
+import shipgirl.Haruna;
 
 public class HarunaCron {
     private final Haruna haruna;
@@ -13,7 +13,7 @@ public class HarunaCron {
             sendEmbed(cleaned, false);
             haruna.harunaLog.debug("Cleaner Executed. Cleaned " + cleaned + " users from DB.");
         } catch (Exception error) {
-            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
             sendEmbed(0, true);
         }
     }

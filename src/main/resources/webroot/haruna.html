@@ -51,8 +51,8 @@
                         document.getElementById("harunaver").innerHTML = "Version " + data.haruna_version;
                         document.getElementById("memoryusage").innerHTML = data.used_memory + " / " + data.maximum_allocatable;
                         document.getElementById("currentuptime").innerHTML = data.program_uptime;
-                        document.getElementById("votessaved").innerHTML = data.saved_data;
-                        document.getElementById("requestsfromboot").innerHTML = data.api_requests_received;
+                        document.getElementById("votessaved").innerHTML = Number(data.saved_data).toLocaleString();
+                        document.getElementById("requestsfromboot").innerHTML = Number(data.api_requests_received).toLocaleString();
                         document.getElementById("datetime").innerHTML = current.toLocaleDateString() + " " + current.toLocaleTimeString();
                     })
                     .catch(console.error);

@@ -1,7 +1,7 @@
-package moe.storage;
+package shipgirl.storage;
 
-import moe.Haruna;
-import moe.structure.HarunaUser;
+import shipgirl.Haruna;
+import shipgirl.structure.HarunaUser;
 import org.h2.jdbcx.JdbcConnectionPool;
 
 import java.sql.*;
@@ -11,7 +11,6 @@ public class HarunaStore {
     private final JdbcConnectionPool pool;
 
     public HarunaStore(Haruna haruna, String location) {
-        haruna.harunaLog.info("Connecting to the database....");
         pool = JdbcConnectionPool.create(
                 "jdbc:h2:file:" + location + "db\\HarunaStore;MODE=MYSQL;MULTI_THREADED=1",
                 "",
@@ -28,10 +27,10 @@ public class HarunaStore {
                 ).execute();
             }
         } catch (Exception error) {
-            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
             System.exit(0);
         }
-        haruna.harunaLog.info("Connected to the database @ " + location + "db\\HarunaStore");
+        haruna.harunaLog.info("Connected to the database! Location: " + location + "db\\HarunaStore");
     }
 
     public void save(String user, long timestamp, boolean weekend) throws Exception {

@@ -1,9 +1,9 @@
-package moe.misc;
+package shipgirl.misc;
 
 import com.sun.management.OperatingSystemMXBean;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import moe.Haruna;
+import shipgirl.Haruna;
 
 import java.lang.management.ManagementFactory;
 import java.time.Instant;
@@ -22,7 +22,7 @@ public class HarunaStats {
         try {
             context.response().end(stats.toString());
         } catch (Exception error) {
-            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
         }
     }
 
@@ -34,7 +34,7 @@ public class HarunaStats {
         try {
             currentVoteSaved = haruna.store.savedCount();
         } catch (Exception error) {
-            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
         }
 
         stats = new JsonObject()

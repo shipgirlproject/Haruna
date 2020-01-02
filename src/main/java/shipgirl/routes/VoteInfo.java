@@ -1,11 +1,11 @@
-package moe.routes;
+package shipgirl.routes;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import moe.Haruna;
-import moe.structure.HarunaUser;
+import shipgirl.Haruna;
+import shipgirl.structure.HarunaUser;
 
 public class VoteInfo {
     private final Haruna haruna;
@@ -56,7 +56,7 @@ public class VoteInfo {
             response.end(json.toString());
             haruna.harunaLog.debug("Served GET request in /voteInfo from " + request.host());
         } catch (Exception error) {
-            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();
         }
     }

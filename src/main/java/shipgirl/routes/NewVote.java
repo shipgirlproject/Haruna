@@ -1,10 +1,10 @@
-package moe.routes;
+package shipgirl.routes;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import moe.Haruna;
+import shipgirl.Haruna;
 
 import java.time.Instant;
 
@@ -52,16 +52,17 @@ public class NewVote {
 
             response.setStatusCode(200).setStatusMessage("ok").end();
 
-            sendVote(user);
+            sendVote(user, isWeekend);
 
             haruna.harunaLog.debug("A POST request in /newVote from " + request.host() + " is saved. UserID: " + user);
         } catch (Exception error) {
-            haruna.formatTrace(error.getMessage(), error.getStackTrace());
+            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
             response.setStatusCode(500).setStatusMessage(error.getMessage()).end();
         }
     }
 
-    private void sendVote(String user) {
+    private void sendVote(String user, boolean isWeekend) {
+        haruna.rest.sendPostVoteRequest(user, isWeekend);
         haruna.rest.getUser(user)
                 .thenAcceptAsync(tag -> {
                     if (tag == null) return;
@@ -72,7 +73,7 @@ public class NewVote {
                     );
                 })
                 .exceptionally(error -> {
-                    haruna.formatTrace(error.getMessage(), error.getStackTrace());
+                    haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
                     return null;
                 });
     }

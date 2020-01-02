@@ -1,4 +1,4 @@
-package moe.structure;
+package shipgirl.structure;
 
 import java.time.Instant;
 

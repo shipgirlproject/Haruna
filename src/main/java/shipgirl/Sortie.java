@@ -1,7 +1,7 @@
-package moe;
+package shipgirl;
 
-import moe.routes.NewVote;
-import moe.routes.VoteInfo;
+import shipgirl.routes.NewVote;
+import shipgirl.routes.VoteInfo;
 
 public class Sortie {
     public static void main(String[] args) {
