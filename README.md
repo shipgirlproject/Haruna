@@ -68,6 +68,8 @@ Returns: JSON string. Example Below:
 
 ## API Wrappers
 
+[Java](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/java)
+
 [Javascript](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/Javascript-Node.js)
 
 [C#](https://github.com/Deivu/Haruna/tree/master/HarunaWrapper/CSharp-Dotnet)
