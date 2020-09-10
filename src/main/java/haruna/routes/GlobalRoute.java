@@ -19,12 +19,13 @@ public class GlobalRoute {
     public void triggerFail(RoutingContext context) {
         Throwable throwable = context.failure();
         HttpServerResponse response = context.response();
+        int statusCode = context.statusCode();
         if (throwable != null) {
             harunaServer.harunaLog.error("Failed REST Request; Error: ", throwable);
         } else {
-            harunaServer.harunaLog.warn("Failed REST Request; Code: " + context.statusCode() + " Reason: " + response.getStatusMessage());
+            harunaServer.harunaLog.warn("Failed REST Request; Code: " + statusCode + " Reason: " + response.getStatusMessage());
         }
-        response.setStatusCode(context.statusCode()).end();
+        response.setStatusCode(statusCode).end();
     }
 
     public void trigger(String endpoint, RoutingContext context) {

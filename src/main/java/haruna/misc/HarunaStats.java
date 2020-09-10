@@ -21,11 +21,7 @@ public class HarunaStats {
         this.stats = new JsonObject();
     }
 
-   public JsonObject getStats() { return stats; }
-
-    public void execute(RoutingContext context) {
-        context.response().end(stats.toString());
-    }
+    public JsonObject getStats() { return stats; }
 
     public void updateJsonObject() {
         double totalMemory = runtime.totalMemory();
@@ -50,6 +46,4 @@ public class HarunaStats {
                 .put("stats_last_updated", Instant.now().toEpochMilli());
         harunaServer.harunaLog.debug("Cached JsonStats Object updated.");
     }
-
-
 }
