@@ -1,4 +1,4 @@
-package shipgirl.structure;
+package haruna.structure;
 
 import java.time.Instant;
 

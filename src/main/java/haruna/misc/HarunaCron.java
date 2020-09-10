@@ -1,34 +1,34 @@
-package shipgirl.misc;
+package haruna.misc;
 
-import shipgirl.Haruna;
+import haruna.HarunaServer;
 
 public class HarunaCron {
-    private final Haruna haruna;
+    private final HarunaServer harunaServer;
 
-    public HarunaCron (Haruna haruna) { this.haruna = haruna; }
+    public HarunaCron (HarunaServer harunaServer) { this.harunaServer = harunaServer; }
 
     public void execute() {
         try {
-            int cleaned = haruna.store.clean();
+            int cleaned = harunaServer.store.clean();
             sendEmbed(cleaned, false);
-            haruna.harunaLog.debug("Cleaner Executed. Cleaned " + cleaned + " users from DB.");
+            harunaServer.harunaLog.debug("Cleaner Executed. Cleaned " + cleaned + " users from DB.");
         } catch (Exception error) {
-            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
+            harunaServer.harunaLog.error(error);
             sendEmbed(0, true);
         }
     }
 
     private void sendEmbed(int amount, Boolean errored) {
         if (errored) {
-            haruna.rest.sendEmbed(
+            harunaServer.rest.sendEmbed(
                     0xdd666c,
                     "\\⚠ **Prune failed**. Check logs for more info.",
                     "⏲ || Haruna's Cron Job"
             );
             return;
         }
-        if (!haruna.config.Debug) return;
-        haruna.rest.sendEmbed(
+        if (!harunaServer.config.Debug) return;
+        harunaServer.rest.sendEmbed(
                 0x66362d,
                 "\\➖ Pruned **" + amount + "** of saved data in database",
                 "⏲ || Haruna's Cron Job"

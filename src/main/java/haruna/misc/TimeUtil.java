@@ -1,4 +1,4 @@
-package shipgirl.misc;
+package haruna.misc;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

@@ -1,16 +1,15 @@
-package shipgirl.misc;
+package haruna.misc;
 
-import shipgirl.Haruna;
-import shipgirl.Sortie;
+import haruna.HarunaServer;
+import haruna.Sortie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// This is just a wrapper around INFO logs.
 public class HarunaLog {
     private final Logger HarunaLog = LoggerFactory.getLogger(Sortie.class);
-    private final Haruna haruna;
+    private final HarunaServer harunaServer;
 
-    public HarunaLog(Haruna haruna) {
+    public HarunaLog(HarunaServer harunaServer) {
         String art = "\n" +
                 "                                                  \n" +
                 ",--.  ,--.                                        \n" +
@@ -20,19 +19,26 @@ public class HarunaLog {
                 "`--'  `--' `--`--'`--'    `----' `--''--' `--`--' \n" +
                 "                                                  \n";
         this.HarunaLog.info(art);
-        this.haruna = haruna;
+        this.harunaServer = harunaServer;
     }
 
     public void debug(String debug) {
-        if (!haruna.config.Debug) return;
+        if (!harunaServer.config.Debug) return;
         HarunaLog.info(debug);
-    }
-
-    public void error(String error) {
-        HarunaLog.error(error);
     }
 
     public void info(String info) {
         HarunaLog.info(info);
     }
+
+    public void warn(String msg) { HarunaLog.warn(msg); }
+
+    public void error(String msg) {
+        HarunaLog.error(msg);
+    }
+
+    public void error(Throwable error) { HarunaLog.error(error.toString(), error); }
+
+    public void error(String msg, Throwable error) { HarunaLog.error(msg, error); }
+
 }

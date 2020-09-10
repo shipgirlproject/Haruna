@@ -1,4 +1,4 @@
-package shipgirl.misc;
+package haruna.misc;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpMethod;
@@ -7,27 +7,26 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
-import shipgirl.Haruna;
+import haruna.HarunaServer;
 
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 
 public class HarunaRest {
-    private final Haruna haruna;
+    private final HarunaServer harunaServer;
     private final String weebhook;
     private final String postWeebhook;
     private final String DBLAuth;
     private final WebClient client;
 
-    public HarunaRest(Haruna haruna, HarunaConfig config) {
-        this.haruna = haruna;
-        this.weebhook = config.Weebhook;
-        this.postWeebhook = config.PostWeebhook;
-        this.DBLAuth = config.DBLAuth;
-
+    public HarunaRest(HarunaServer harunaServer) {
+        this.harunaServer = harunaServer;
+        this.weebhook = harunaServer.config.Weebhook;
+        this.postWeebhook = harunaServer.config.PostWeebhook;
+        this.DBLAuth = harunaServer.config.DBLAuth;
         WebClientOptions options = new WebClientOptions()
-                .setUserAgent("Haruna/" + haruna.config.getHarunaVersion());
-        this.client = WebClient.create(haruna.vertx, options);
+                .setUserAgent("Haruna/" + harunaServer.config.HarunaVersion);
+        this.client = WebClient.create(harunaServer.vertx, options);
     }
 
     public CompletableFuture<String> getUser(String id) {
@@ -38,21 +37,23 @@ public class HarunaRest {
                     try {
                         if (res.failed()) {
                             Throwable error = res.cause();
-                            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
+                            if (error == null) {
+                                result.complete(null);
+                                return;
+                            }
+                            throw error;
+                        }
+                        HttpResponse<Buffer> response = res.result();
+                        if (!response.getHeader("Content-Type").startsWith("application/json")) {
                             result.complete(null);
                             return;
                         }
-                        HttpResponse<Buffer> response = res.result();
-                        if (response.getHeader("Content-Type").startsWith("application/json")) {
-                            JsonObject body = response.bodyAsJsonObject();
-                            String username = body.getString("username");
-                            if (username == null) username = "???";
-                            String discrim = body.getString("discriminator");
-                            if (discrim == null) discrim = "???";
-                            result.complete(username + "#" + discrim);
-                        } else result.complete(null);
-                    } catch (Exception error) {
-                        haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
+                        JsonObject body = response.bodyAsJsonObject();
+                        String username = body.getString("username") == null ? "Unknown" : body.getString("username");
+                        String discriminator = body.getString("discriminator") == null ? "0000" : body.getString("discriminator");
+                        result.complete(username + "#" + discriminator);
+                    } catch (Throwable error) {
+                        harunaServer.harunaLog.error(error);
                         result.complete(null);
                     }
                 });
@@ -70,19 +71,18 @@ public class HarunaRest {
                         json,
                         res -> {
                             if (res.succeeded()) return;
-                            Throwable error = res.cause();
-                            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
+                            harunaServer.harunaLog.error(res.cause());
                         }
                 );
     }
 
-    public void sendEmbed(int color, String desc, String footerdesc) {
+    public void sendEmbed(int color, String description, String footerDescription) {
         if (weebhook == null) return;
         JsonObject footer = new JsonObject()
-                .put("text", footerdesc);
+                .put("text", footerDescription);
         JsonObject embed = new JsonObject()
                 .put("color", color)
-                .put("description", desc)
+                .put("description", description)
                 .put("timestamp", Instant.now())
                 .put("footer", footer);
         makeWebhookRequest(new JsonArray().add(embed));
@@ -95,8 +95,7 @@ public class HarunaRest {
                         new JsonObject().put("embeds", array),
                         res -> {
                             if (res.succeeded()) return;
-                            Throwable error = res.cause();
-                            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
+                            harunaServer.harunaLog.error(res.cause());
                         });
     }
 }

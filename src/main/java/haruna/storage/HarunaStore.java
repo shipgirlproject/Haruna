@@ -1,7 +1,7 @@
-package shipgirl.storage;
+package haruna.storage;
 
-import shipgirl.Haruna;
-import shipgirl.structure.HarunaUser;
+import haruna.HarunaServer;
+import haruna.structure.HarunaUser;
 import org.h2.jdbcx.JdbcConnectionPool;
 
 import java.sql.*;
@@ -10,27 +10,21 @@ import java.time.Instant;
 public class HarunaStore {
     private final JdbcConnectionPool pool;
 
-    public HarunaStore(Haruna haruna, String location) {
+    public HarunaStore(HarunaServer harunaServer, String location) throws SQLException {
         pool = JdbcConnectionPool.create(
                 "jdbc:h2:file:" + location + "db\\HarunaStore;MODE=MYSQL;MULTI_THREADED=1",
                 "",
                 ""
         );
-        try {
-            try (Connection connection = pool.getConnection()) {
-                connection.prepareStatement("CREATE TABLE IF NOT EXISTS HarunaStore(" +
-                             "user VARCHAR(128) NOT NULL," +
-                             "timestamp BIGINT NOT NULL," +
-                             "weekend BOOLEAN NOT NULL," +
-                             "UNIQUE(user)" +
-                             ")"
-                ).execute();
-            }
-        } catch (Exception error) {
-            haruna.harunaUtil.formatTrace(error.getMessage(), error.getStackTrace());
-            System.exit(0);
-        }
-        haruna.harunaLog.info("Connected to the database! Location: " + location + "db\\HarunaStore");
+        pool.getConnection()
+                .prepareStatement("CREATE TABLE IF NOT EXISTS HarunaStore(" +
+                        "user VARCHAR(128) NOT NULL," +
+                        "timestamp BIGINT NOT NULL," +
+                        "weekend BOOLEAN NOT NULL," +
+                        "UNIQUE(user)" +
+                        ")" )
+                .execute();
+        harunaServer.harunaLog.info("Connected to the database! Location: " + location + "db\\HarunaStore");
     }
 
     public void save(String user, long timestamp, boolean weekend) throws Exception {
