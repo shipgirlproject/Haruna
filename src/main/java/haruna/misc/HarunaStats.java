@@ -24,26 +24,24 @@ public class HarunaStats {
     public JsonObject getStats() { return stats; }
 
     public void updateJsonObject() {
-        double totalMemory = runtime.totalMemory();
-        double freeMemory = runtime.freeMemory();
-        int currentVoteSaved = 0;
         try {
-            currentVoteSaved = harunaServer.store.savedCount();
+            double totalMemory = runtime.totalMemory();
+            double freeMemory = runtime.freeMemory();
+            stats = new JsonObject()
+                    .put("haruna_version", harunaServer.config.HarunaVersion)
+                    .put("saved_data", harunaServer.store.savedCount())
+                    .put("api_requests_received", harunaServer.requestsReceived)
+                    .put("program_uptime", TimeUtil.getSimpleTimeFormat(this.harunaServer.runtime.getUptime()))
+                    .put("cpu_usage", Math.round(system.getSystemCpuLoad() * 100) + " %")
+                    .put("used_memory", harunaServer.harunaUtil.convertRam(totalMemory - freeMemory))
+                    .put("allocated_free", harunaServer.harunaUtil.convertRam(freeMemory))
+                    .put("allocated_reserved", harunaServer.harunaUtil.convertRam(totalMemory))
+                    .put("maximum_allocatable", harunaServer.harunaUtil.convertRam((double) runtime.maxMemory()))
+                    .put("stats_last_updated", Instant.now().toEpochMilli());
         } catch (Exception error) {
             harunaServer.harunaLog.error(error);
             return;
         }
-        stats = new JsonObject()
-                .put("haruna_version", harunaServer.config.HarunaVersion)
-                .put("saved_data", currentVoteSaved)
-                .put("api_requests_received", harunaServer.requestsReceived)
-                .put("program_uptime", TimeUtil.getDurationBreakdown(this.harunaServer.runtime.getUptime(), true))
-                .put("cpu_usage", Math.round(system.getSystemCpuLoad() * 100) + " %")
-                .put("used_memory", harunaServer.harunaUtil.convertRam(totalMemory - freeMemory))
-                .put("allocated_free", harunaServer.harunaUtil.convertRam(freeMemory))
-                .put("allocated_reserved", harunaServer.harunaUtil.convertRam(totalMemory))
-                .put("maximum_allocatable", harunaServer.harunaUtil.convertRam((double) runtime.maxMemory()))
-                .put("stats_last_updated", Instant.now().toEpochMilli());
         harunaServer.harunaLog.debug("Cached JsonStats Object updated.");
     }
 }

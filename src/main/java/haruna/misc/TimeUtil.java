@@ -47,9 +47,7 @@ public class TimeUtil {
      * @return A string of the form "X Days Y Hours Z Minutes A Seconds".
      */
     public static String getDurationBreakdown(long millis, final boolean showMS) {
-        if (millis <= 0) {
-            return "-";
-        }
+        if (millis <= 0) return "-";
 
         final long days = TimeUnit.MILLISECONDS.toDays(millis);
         millis -= TimeUnit.DAYS.toMillis(days);
@@ -81,7 +79,37 @@ public class TimeUtil {
             sb.append(String.format("%02d", millis));
             sb.append("ms");
         }
+        return sb.toString();
+    }
 
+    public static String getSimpleTimeFormat(long millis) {
+        if (millis <= 0) return "-";
+
+        final long days = TimeUnit.MILLISECONDS.toDays(millis);
+        millis -= TimeUnit.DAYS.toMillis(days);
+        final long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        millis -= TimeUnit.HOURS.toMillis(hours);
+        final long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+        millis -= TimeUnit.MINUTES.toMillis(minutes);
+        final long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+        millis -= TimeUnit.SECONDS.toMillis(seconds);
+
+        final StringBuilder sb = new StringBuilder();
+        if (days > 0) {
+            sb.append(days);
+            sb.append(" Day(s)");
+        } else if (hours > 0) {
+            sb.append(String.format("%02d", hours));
+            sb.append(" Hour(s)");
+        } else if (minutes > 0) {
+            sb.append(String.format("%02d", minutes));
+            sb.append(" Minute(s)");
+        } else if (seconds > 0) {
+            sb.append(String.format("%02d", seconds));
+            sb.append(" Second(s)");
+        } else {
+            sb.append("< 1 Second");
+        }
         return sb.toString();
     }
 
