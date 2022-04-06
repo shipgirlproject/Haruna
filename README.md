@@ -105,7 +105,9 @@ Returns: JSON string.
 
 3. In a command line, run: `docker build -f Dockerfile -t deivu/haruna .` on the repository folder.
 
-4. Start the server via `docker run -d deivu/haruna`.
+4. Start the server via `docker run -d -p 8080:<port_you_specified> deivu/haruna`.
+
+5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/`.
 
 # Haruna's config file example & explanation.
 ```js
