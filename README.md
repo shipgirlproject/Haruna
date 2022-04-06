@@ -85,6 +85,8 @@ Returns: JSON string.
 
 # How to Host
 
+## Manually
+
 1. Download the latest `haruna.jar` from Github Releases. [Click me](https://github.com/Deivu/Haruna/releases)
 
 2. Download `HarunaConfig.json` from github. [Click me](https://github.com/Deivu/Haruna/blob/master/config_example/HarunaConfig.json)
@@ -94,6 +96,16 @@ Returns: JSON string.
 4. Start the server via `java -jar haruna.jar`
 
 5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/` or `http://your_server_ip:the_port_you_specified/`. [Example](http://it-snake.net:1101/)
+
+## Docker
+
+1. Clone this repository.
+
+2. Configure `HarunaConfig.json` that you will find on `config_example/` folder.
+
+3. In a command line, run: `docker build -f Dockerfile -t deivu/haruna .` on the repository folder.
+
+4. Start the server via `docker run -d deivu/haruna`.
 
 # Haruna's config file example & explanation.
 ```js
