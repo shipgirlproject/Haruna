@@ -1,0 +1,14 @@
+services:
+  haruna:
+    image: ghcr.io/haruna:latest
+    restart: unless-stopped
+    ports:
+      - 8080:1024
+    volumes:
+      - haruna_data:/db
+    environment:
+      REST_AUTH: weeb_handler
+      DBL_AUTH: JRIrjrqwrpURJQWOPRj_rfnQEUi_KRqop
+
+volumes:
+  haruna_data: null
