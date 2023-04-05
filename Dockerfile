@@ -11,6 +11,4 @@ RUN mkdir /app
 
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/haruna.jar
 
-COPY /config_example/HarunaConfig.json /app/HarunaConfig.json
-
 ENTRYPOINT ["java", "-jar", "/app/haruna.jar"]
