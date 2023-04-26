@@ -13,6 +13,8 @@ import haruna.storage.HarunaStore;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,10 +38,14 @@ public class HarunaServer {
     public long requestsReceived = 0;
 
     HarunaServer() throws Exception {
-
         this.harunaUtil = new HarunaUtil();
         this.harunaLog = new HarunaLog(this);
-        this.config = new HarunaConfig(this, harunaUtil.getLocation());
+        
+        String configLocation = harunaUtil.getLocation() + "HarunaConfig.json";
+        if (Files.exists(Paths.get(configLocation)))
+            this.config = new HarunaConfig(this, harunaUtil.getLocation());
+        else
+            this.config = new HarunaConfig(this);
         this.store = new HarunaStore(this, harunaUtil.getLocation());
         this.stats = new HarunaStats(this);
         this.vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(config.Threads));

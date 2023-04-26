@@ -85,6 +85,8 @@ Returns: JSON string.
 
 # How to Host
 
+## Manually
+
 1. Download the latest `haruna.jar` from Github Releases. [Click me](https://github.com/Deivu/Haruna/releases)
 
 2. Download `HarunaConfig.json` from github. [Click me](https://github.com/Deivu/Haruna/blob/master/config_example/HarunaConfig.json)
@@ -95,6 +97,14 @@ Returns: JSON string.
 
 5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/` or `http://your_server_ip:the_port_you_specified/`. [Example](http://it-snake.net:1101/)
 
+## Docker-Compose
+
+1. Get docker-compose file. [Click me](https://github.com/Deivu/Haruna/blob/master/config_example/docker-compose.yml)
+
+2. Update values according to your needs (**ports** and **environment**)
+
+3. Start the server via `docker-compose up -d`
+
 # Haruna's config file example & explanation.
 ```js
 {
@@ -104,20 +114,22 @@ Returns: JSON string.
   "Weebhook": "https://discordapp.com/api/webhooks/84293482482420424024802/sneaky_token_OWO",
   "PostWeebhook": "localhost:6969",
   "Debug": true,
-  "Port": 9696,
+  "Port": 1024,
   "Threads": 8,
   UserTimeout: 432000000
 }
 ```
-- `RestAuth` is the Discord Bot List Webhook Authorization.
-- `DBLAuth` is your token for Discord Bot List.
-- `Prefix` used if you want to reverse proxy. Leave it blank if you don't need to use it (Optional)
-- `Weebhook` is your Discord Webhook link (Optional)
-- `PostWeebhook` is where Haruna will try to send a POST request of the user who voted [Refer Here](https://github.com/Deivu/Haruna#webhook-api-v140-and-later) (Optional)
-- `Debug` is if you want to enable debug logs of Haruna (Optional, Default: false)
-- `Port` is what port you want this server hosted (Optional, Default: 1024)
-- `Threads` is how many threads you want this server to have (Optional, Default: Your CPU Thread Count)
-- `UserTimeout` is how long the user will stay in database in ms (Optional, Default: 43200000)
+- `RestAuth` **(REST_AUTH)** is the Discord Bot List Webhook Authorization.
+- `DBLAuth` **(DBL_AUTH)** is your token for Discord Bot List.
+- `Prefix` **(PREFIX)** used if you want to reverse proxy. Leave it blank if you don't need to use it (Optional)
+- `Weebhook` **(WEEBHOOK)** is your Discord Webhook link (Optional)
+- `PostWeebhook` **(POST_WEEBHOOK)** is where Haruna will try to send a POST request of the user who voted [Refer Here](https://github.com/Deivu/Haruna#webhook-api-v140-and-later) (Optional)
+- `Debug` **(DEBUG_ENABLED)** is if you want to enable debug logs of Haruna (Optional, Default: false)
+- `Port` **(PORT)** is what port you want this server hosted (Optional, Default: 1024)
+- `Threads` **(THREADS_COUNT)** is how many threads you want this server to have (Optional, Default: Your CPU Thread Count)
+- `UserTimeout` **(USER_TIMEOUT)** is how long the user will stay in database in ms (Optional, Default: 43200000)
+
+*Between parenthesis is the key to set as environment variable in case you want to use this configuration way.*
 
 # Support
 **We provide support for usage of this API in our Official Server's #support channel which is [in HERE](https://discordapp.com/invite/FVqbtGu)**
