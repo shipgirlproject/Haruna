@@ -2,12 +2,11 @@ name: Create and publish an artifact image
 
 on:
   push:
-    branches: ['master']
+    tags: [ '*.*.*' ]
 
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
     permissions:
       contents: write
 
