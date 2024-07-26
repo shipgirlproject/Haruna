@@ -4,9 +4,6 @@ on:
   push:
     branches: ['master']
 
-env:
-  REGISTRY: ghcr.io
-
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -26,8 +23,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: Haruna
-          path: build/libs
+          files: build/libs/haruna-*.jar
