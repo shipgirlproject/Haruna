@@ -25,10 +25,6 @@ dependencies {
     implementation("org.json:json:20180813")
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '8.9.0' 
-}
-
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
