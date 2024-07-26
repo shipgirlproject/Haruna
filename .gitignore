@@ -26,3 +26,6 @@ hs_err_pid*
 .gradle
 .vscode
 bin
+
+# Unignore gradle-wrapper.jar
+!/gradle/wrapper/gradle-wrapper.jar
