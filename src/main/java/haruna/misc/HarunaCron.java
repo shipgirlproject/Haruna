@@ -27,7 +27,7 @@ public class HarunaCron {
             );
             return;
         }
-        if (!harunaServer.config.Debug) return;
+        if (!harunaServer.config.debug) return;
         harunaServer.rest.sendEmbed(
                 0x66362d,
                 "\\➖ Pruned **" + amount + "** of saved data in database",

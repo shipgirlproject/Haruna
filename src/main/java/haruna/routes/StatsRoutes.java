@@ -2,7 +2,6 @@ package haruna.routes;
 
 import haruna.HarunaServer;
 import io.vertx.core.http.HttpServerResponse;
-import io.vertx.ext.web.RoutingContext;
 
 public class StatsRoutes {
     private final HarunaServer harunaServer;

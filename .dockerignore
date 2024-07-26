@@ -1,3 +1,7 @@
 .git
-HarunaWrapper
+.github
+.gradle
+.vscode
 config_example
+HarunaWrapper
+HarunaConfig.json

@@ -23,7 +23,7 @@ public class HarunaLog {
     }
 
     public void debug(String debug) {
-        if (!harunaServer.config.Debug) return;
+        if (!harunaServer.config.debug) return;
         HarunaLog.info(debug);
     }
 

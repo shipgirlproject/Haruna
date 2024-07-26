@@ -5,6 +5,8 @@
 build/*
 .gradle/*
 !gradle/wrapper/gradle-wrapper.jar
+bin/*
+.vscode
 # Compiled class file
 *.class
 

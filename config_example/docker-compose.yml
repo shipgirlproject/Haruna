@@ -7,8 +7,8 @@ services:
     volumes:
       - haruna_data:/db
     environment:
-      REST_AUTH: weeb_handler
-      DBL_AUTH: JRIrjrqwrpURJQWOPRj_rfnQEUi_KRqop
+      REST_AUTH: password
+      TOPGG_AUTH: topgg_token
 
 volumes:
   haruna_data: null

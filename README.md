@@ -5,11 +5,6 @@
 
 The ShipGirl Project; Haruna. `(c) Kancolle for Haruna.`
 
-# Why Haruna ?
-<p align="center">
-  <img src="https://i.imgur.com/7Yiqs4D.png">
-</p>
-
 > Fast and reliable.
 
 > Run and forget, Haruna can run with **99.9% uptime**.
@@ -63,7 +58,7 @@ Returns: Current status of server in JSON string.
 
 > If enabled, it will send a POST request containing the user who voted in the URL of your choice.
 
-> For checking the request validity, you can check the authorization header as it will send the same **RestAuth** you have set on your config
+> For checking the request validity, you can check the authorization header as it will send the same **restAuth** you have set on your config
 
 Returns: JSON string.
 ```js
@@ -97,41 +92,39 @@ Returns: JSON string.
 
 5. To verify Haruna is working, navigate to `http://localhost:port_you_specified/` or `http://your_server_ip:the_port_you_specified/`. [Example](http://it-snake.net:1101/)
 
-## Docker-Compose
+## Docker
 
 1. Get docker-compose file. [Click me](https://github.com/Deivu/Haruna/blob/master/config_example/docker-compose.yml)
 
 2. Update values according to your needs (**ports** and **environment**)
 
-3. Start the server via `docker-compose up -d`
+3. Start the server via `docker compose up -d`
 
 # Haruna's config file example & explanation.
 ```js
 {
-  "RestAuth": "weeb_handler", 
-  "DBLAuth": "JRIrjrqwrpURJQWOPRj_rfnQEUi_KRqop",
-  "Prefix": "/webserver",
-  "Weebhook": "https://discordapp.com/api/webhooks/84293482482420424024802/sneaky_token_OWO",
-  "PostWeebhook": "localhost:6969",
-  "Debug": true,
-  "Port": 1024,
-  "Threads": 8,
-  UserTimeout: 432000000
+  "restAuth": "weeb_handler", 
+  "topggAuth": "JRIrjrqwrpURJQWOPRj_rfnQEUi_KRqop",
+  "webhook": "https://discordapp.com/api/webhooks/84293482482420424024802/sneaky_token_OWO",
+  "postWebhook": "localhost:6969",
+  "debug": true,
+  "port": 1024,
+  "threads": 8,
+  "userTimeout": 432000000
 }
 ```
-- `RestAuth` **(REST_AUTH)** is the Discord Bot List Webhook Authorization.
-- `DBLAuth` **(DBL_AUTH)** is your token for Discord Bot List.
-- `Prefix` **(PREFIX)** used if you want to reverse proxy. Leave it blank if you don't need to use it (Optional)
-- `Weebhook` **(WEEBHOOK)** is your Discord Webhook link (Optional)
-- `PostWeebhook` **(POST_WEEBHOOK)** is where Haruna will try to send a POST request of the user who voted [Refer Here](https://github.com/Deivu/Haruna#webhook-api-v140-and-later) (Optional)
-- `Debug` **(DEBUG_ENABLED)** is if you want to enable debug logs of Haruna (Optional, Default: false)
-- `Port` **(PORT)** is what port you want this server hosted (Optional, Default: 1024)
-- `Threads` **(THREADS_COUNT)** is how many threads you want this server to have (Optional, Default: Your CPU Thread Count)
-- `UserTimeout` **(USER_TIMEOUT)** is how long the user will stay in database in ms (Optional, Default: 43200000)
+- `restAuth` **(REST_AUTH)** is the Discord Bot List Webhook Authorization.
+- `topggAuth` **(TOPGG_AUTH)** is your token for Discord Bot List.
+- `webhook` **(WEBHOOK)** is your Discord Webhook link (Optional)
+- `postWebhook` **(POST_WEBHOOK)** is where Haruna will try to send a POST request of the user who voted [Refer Here](https://github.com/Deivu/Haruna#webhook-api-v140-and-later) (Optional)
+- `debug` **(DEBUG)** is if you want to enable debug logs of Haruna (Optional, Default: false)
+- `port` **(PORT)** is what port you want this server hosted (Optional, Default: 1024)
+- `threads` **(THREADS)** is how many threads you want this server to have (Optional, Default: Your CPU Thread Count)
+- `userTimeout` **(USER_TIMEOUT)** is how long the user will stay in database in ms (Optional, Default: 43200000)
 
 *Between parenthesis is the key to set as environment variable in case you want to use this configuration way.*
 
 # Support
-**We provide support for usage of this API in our Official Server's #support channel which is [in HERE](https://discordapp.com/invite/FVqbtGu)**
+**We provide support for usage of this API in our Official Server's #development-support forums which is [in HERE](https://discordapp.com/invite/FVqbtGu)**
 
-> Made with ❤️ by Saya#0113 
+> Made with ❤️ by @ichimakase

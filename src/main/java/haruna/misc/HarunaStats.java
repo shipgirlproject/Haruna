@@ -2,7 +2,6 @@ package haruna.misc;
 
 import com.sun.management.OperatingSystemMXBean;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.RoutingContext;
 import haruna.HarunaServer;
 
 import java.lang.management.ManagementFactory;
@@ -28,11 +27,11 @@ public class HarunaStats {
             double totalMemory = runtime.totalMemory();
             double freeMemory = runtime.freeMemory();
             stats = new JsonObject()
-                    .put("haruna_version", harunaServer.config.HarunaVersion)
+                    .put("haruna_version", harunaServer.config.version)
                     .put("saved_data", harunaServer.store.savedCount())
                     .put("api_requests_received", harunaServer.requestsReceived)
                     .put("program_uptime", TimeUtil.getSimpleTimeFormat(this.harunaServer.runtime.getUptime()))
-                    .put("cpu_usage", Math.round(system.getSystemCpuLoad() * 100) + " %")
+                    .put("cpu_usage", Math.round(system.getCpuLoad() * 100) + " %")
                     .put("used_memory", harunaServer.harunaUtil.convertRam(totalMemory - freeMemory))
                     .put("allocated_free", harunaServer.harunaUtil.convertRam(freeMemory))
                     .put("allocated_reserved", harunaServer.harunaUtil.convertRam(totalMemory))

@@ -14,25 +14,19 @@ import java.util.concurrent.CompletableFuture;
 
 public class HarunaRest {
     private final HarunaServer harunaServer;
-    private final String weebhook;
-    private final String postWeebhook;
-    private final String DBLAuth;
     private final WebClient client;
 
     public HarunaRest(HarunaServer harunaServer) {
         this.harunaServer = harunaServer;
-        this.weebhook = harunaServer.config.Weebhook;
-        this.postWeebhook = harunaServer.config.PostWeebhook;
-        this.DBLAuth = harunaServer.config.DBLAuth;
         WebClientOptions options = new WebClientOptions()
-                .setUserAgent("Haruna/" + harunaServer.config.HarunaVersion);
+                .setUserAgent("Haruna/" + harunaServer.config.version);
         this.client = WebClient.create(harunaServer.vertx, options);
     }
 
     public CompletableFuture<String> getUser(String id) {
         CompletableFuture<String> result = new CompletableFuture<>();
         client.requestAbs(HttpMethod.GET, "https://top.gg/api/users/" + id)
-                .putHeader("authorization", DBLAuth)
+                .putHeader("authorization", this.harunaServer.config.topggAuth)
                 .send(res -> {
                     try {
                         if (res.failed()) {
@@ -61,11 +55,11 @@ public class HarunaRest {
     }
 
     public void sendPostVoteRequest(String user, Boolean isWeekend) {
-        if (postWeebhook == null) return;
+        if (this.harunaServer.config.postWebhook == null) return;
         JsonObject json = new JsonObject()
                 .put("user", user)
                 .put("isWeekend", isWeekend);
-        client.requestAbs(HttpMethod.POST, postWeebhook)
+        client.requestAbs(HttpMethod.POST, this.harunaServer.config.postWebhook)
                 .putHeader("Content-Type", "application/json")
                 .sendJsonObject(
                         json,
@@ -77,7 +71,6 @@ public class HarunaRest {
     }
 
     public void sendEmbed(int color, String description, String footerDescription) {
-        if (weebhook == null) return;
         JsonObject footer = new JsonObject()
                 .put("text", footerDescription);
         JsonObject embed = new JsonObject()
@@ -89,7 +82,7 @@ public class HarunaRest {
     }
 
     private void makeWebhookRequest(JsonArray array) {
-        client.requestAbs(HttpMethod.POST, weebhook)
+        client.requestAbs(HttpMethod.POST, this.harunaServer.config.webhook)
                 .putHeader("Content-Type", "application/json")
                 .sendJsonObject(
                         new JsonObject().put("embeds", array),

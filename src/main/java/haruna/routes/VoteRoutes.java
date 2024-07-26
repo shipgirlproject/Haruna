@@ -16,7 +16,7 @@ public class VoteRoutes {
 
     public void trigger(String endpoint, RoutingContext context, HttpServerRequest request, HttpServerResponse response) throws Exception {
         String auth = request.getHeader("Authorization");
-        if (auth == null || !auth.equals(harunaServer.config.RestAuth)) {
+        if (auth == null || !auth.equals(harunaServer.config.restAuth)) {
             response.setStatusMessage("Unauthorized");
             context.fail(401);
             return;
@@ -47,7 +47,7 @@ public class VoteRoutes {
             return;
         }
 
-        long store = Instant.now().plusMillis(harunaServer.config.UserTimeout).toEpochMilli();
+        long store = Instant.now().plusMillis(harunaServer.config.userTimeout).toEpochMilli();
 
         harunaServer.store.save(user, store, isWeekend);
         harunaServer.rest.sendPostVoteRequest(user, isWeekend);

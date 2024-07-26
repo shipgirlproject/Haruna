@@ -1,14 +1,25 @@
-FROM gradle:4.10-jdk8-alpine AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build --no-daemon 
+FROM gradle:8.9.0-jdk22-alpine as build
 
-FROM openjdk:8-jre-slim
+LABEL stage=build
 
-EXPOSE 1024
+RUN mkdir -p /root/build
 
-RUN mkdir /app
+WORKDIR /root/build
 
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/haruna.jar
+COPY . /root/build
 
-ENTRYPOINT ["java", "-jar", "/app/haruna.jar"]
+RUN gradle build --no-daemon
+
+FROM openjdk:22-slim
+
+RUN groupadd -g 101 haruna && \
+    useradd -r -u 101 -g haruna haruna
+
+RUN mkdir -p /home/haruna && \
+    chown -R haruna:haruna /home/haruna
+
+USER haruna
+
+COPY --from=build /root/build/build/libs/haruna*.jar /home/haruna/haruna.jar
+
+ENTRYPOINT ["java", "-jar", "haruna.jar"]
