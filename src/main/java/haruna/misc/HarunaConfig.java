@@ -23,9 +23,10 @@ public class HarunaConfig {
 
     public HarunaConfig(HarunaServer harunaServer) throws Exception {
         harunaServer.harunaLog.info("Version: " + this.version + "\n");
-        String configLocation = harunaServer.harunaUtil.getLocation() + "HarunaConfig.json";
+        String configLocation = harunaServer.harunaUtil.getLocation() + "config.json";
         if (Files.exists(Paths.get(configLocation))) {
-            JSONObject config = new JSONObject(new JSONTokener(Files.newInputStream(Paths.get(harunaServer.harunaUtil.getLocation() + "HarunaConfig.json"))));
+            harunaServer.harunaLog.info("Config.json exists, using the file to load configuration");
+            JSONObject config = new JSONObject(new JSONTokener(Files.newInputStream(Paths.get(harunaServer.harunaUtil.getLocation() + "config.json"))));
             if (!config.has("restAuth")) throw new Exception("restAuth not found in config");
             if (!config.has("topggAuth")) throw new Exception("topggAuth not found in config");
             this.topggAuth = config.getString("topggAuth");
@@ -36,9 +37,9 @@ public class HarunaConfig {
             this.port = config.has("port") ? config.getInt("port") : PORT_DEFAULT;
             this.threads = config.has("threads") ? config.getInt("threads") : Runtime.getRuntime().availableProcessors();
             this.userTimeout = config.has("userTimeout") ? config.getLong("userTimeout") : USER_TIMEOUT_DEFAULT;
-            harunaServer.harunaLog.info("Configuration Loaded from config file!");
+            harunaServer.harunaLog.info("Configuration Loaded from config.json!");
         } else {
-            harunaServer.harunaLog.info("Version: " + this.version + "\n");
+            harunaServer.harunaLog.info("Config.json don't exist, using var env to load configuration");
             this.topggAuth = System.getenv("TOPGG_AUTH");
             if (this.topggAuth== null) throw new Exception("TOPGG_AUTH not found in env");
             this.restAuth = System.getenv("REST_AUTH");
@@ -52,7 +53,7 @@ public class HarunaConfig {
             this.threads = threads != null ? Integer.parseInt(threads) : Runtime.getRuntime().availableProcessors();
             String userTimeout = System.getenv("USER_TIMEOUT");
             this.userTimeout =  userTimeout != null ? Long.parseLong(userTimeout) : USER_TIMEOUT_DEFAULT;
-            harunaServer.harunaLog.info("Configuration Loaded from varenv!");
+            harunaServer.harunaLog.info("Configuration Loaded from var env!");
         }
     }
 }
