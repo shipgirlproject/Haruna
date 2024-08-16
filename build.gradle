@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-version = '4.0.1'
+version = '4.0.2'
 
 archivesBaseName = 'haruna'
 
